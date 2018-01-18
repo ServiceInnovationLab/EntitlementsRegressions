@@ -12,11 +12,54 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "03d13d90-5e77-426b-b1d3-da5684e5c5ca",
+						"id": "108994e1-5f87-4429-b4e3-a79da53b7a36",
 						"type": "text/javascript",
 						"exec": [
 							"// ensure healthy response code",
+							"var expected = {",
+							"                \"dependencies\": {",
+							"                    \"factsUsed\": [",
+							"                        \"applicant.normallyLivesInNZ\",",
+							"                        \"applicant.isNZResident\",",
+							"                        \"threshold.isAccommodationSupplement\",",
+							"                        \"benefit.isStudentAllowance\",",
+							"                        \"applicant.hasAccommodationCosts\",",
+							"                        \"applicant.hasSocialHousing\",",
+							"                        \"applicant.receivesAccommodationSupport\"",
+							"                    ],",
+							"                    \"rulesUsed\": [",
+							"                        \"f-cf3512cc-800a-4f84-b474-5f5bbdc1772a\"",
+							"                    ]",
+							"                },",
+							"                \"goal\": {",
+							"                    \"modality\": \"PERMITTED\",",
+							"                    \"negated\": false,",
+							"                    \"value\": true,",
+							"                    \"id\": \"benefit.isAccommodationSupplement\",",
+							"                    \"type\": \"BOOL\"",
+							"                },",
+							"                \"reasoningResult\": \"CONCLUSIVE\"",
+							"            }",
+							"",
 							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"var jsonData = pm.response.json();",
+							"var result = jsonData.benefit['isAccommodationSupplement'][2];",
+							"",
+							"pm.test(\"Accommodation supplement result must be included\", function () {",
+							"    pm.expect(result.goal.id).to.eq(\"benefit.isAccommodationSupplement\");",
+							"});",
+							"",
+							"pm.test(\"Accommodation supplement result should be conclusive\", function () {",
+							"    pm.expect(result.reasoningResult).to.eq(\"CONCLUSIVE\");",
+							"});",
+							"",
+							"pm.test(\"Accommodation supplement should be permitted\", function () {",
+							"    pm.expect(result.goal.modality).to.eq(\"PERMITTED\");",
+							"});",
+							"",
+							"",
 							""
 						]
 					}
@@ -27,7 +70,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer {{TOKEN}}"
+						"value": "Bearer {{token}}"
 					},
 					{
 						"key": "Content-Type",
