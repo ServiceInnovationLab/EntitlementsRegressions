@@ -9,6 +9,7 @@ before_script:
   - node --version
   - npm --version
   - node_modules/.bin/newman --version
+  - ./bin/make_postman_env.sh
 
 script:
   - node_modules/.bin/newman run tests/*.json -e ./postman_env.json
