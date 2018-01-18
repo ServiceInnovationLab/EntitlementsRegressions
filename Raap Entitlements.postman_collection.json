@@ -1,0 +1,71 @@
+{
+	"info": {
+		"name": "Raap Entitlements",
+		"_postman_id": "47e00e8e-f8ca-531d-69e7-95eaaccd5d4a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Accomodation Supplement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "03d13d90-5e77-426b-b1d3-da5684e5c5ca",
+						"type": "text/javascript",
+						"exec": [
+							"// ensure healthy response code",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n    \n  },\n  \"threshold\": {\n  \t\"isAccommodationSupplement\": true\n  },\n  \"benefit\": {\n  \t\"isStudentAllowance\": false\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
