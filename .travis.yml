@@ -12,4 +12,5 @@ before_script:
   - ./bin/make_postman_env.sh
 
 script:
+  - overcommit --sign; overcommit --run
   - node_modules/.bin/newman run tests/*.json -e ./postman_env.json
