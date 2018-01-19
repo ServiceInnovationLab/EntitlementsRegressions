@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions.svg?branch=master)](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions)
 
-Runs regression tests against Regulation as a Platform - tests if a persona correctly is told they are entitled to the correct benefits.
+Runs regression tests against Regulation as a Platform - tests a set of persona are entitled to the correct benefits.
 
 ## How to configure and run
 (for more clues see .travis.yml)
