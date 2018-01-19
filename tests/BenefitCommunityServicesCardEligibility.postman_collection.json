@@ -1,0 +1,216 @@
+{
+	"info": {
+		"name": "Benefit: Community Services Card (eligibility)",
+		"_postman_id": "844758d8-0186-6100-6aa6-885a5c2f2e93",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ef99174-6b22-44b4-bdce-312a728a579d",
+						"type": "text/javascript",
+						"exec": [
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData  = pm.response.json();",
+							"var applicant = jsonData['applicant'];",
+							"",
+							"var applicantAge                     = applicant['Age'][0]['goal']['value'];",
+							"var applicantIsNZResident            = applicant['isNZResident'][0]['goal']['value'];",
+							"var applicantNormallyLivesInNZ       = applicant['normallyLivesInNZ'][0]['goal']['value'];",
+							"var thresholdIsCommunityServicesCard = jsonData['threshold']['isCommunityServicesCard'][0]['goal']['value'];",
+							"var benefitIsCommunityServicesCard   = jsonData['benefit']['isCommunityServicesCard'][0]['goal']['value'];",
+							"",
+							"    ",
+							"tests[\"Applicant is 16 years old or over\"]    = applicantAge >= 16;",
+							"tests[\"Applicant is a NZ Resident\"]           = applicantIsNZResident === true;",
+							"tests[\"Threshold is Community Services Card\"] = thresholdIsCommunityServicesCard === true;",
+							"tests[\"Benefit is Community Services Card\"]   = benefitIsCommunityServicesCard === true;",
+							"",
+							"var checkTestsAll = true;",
+							"for (var test in tests) {",
+							"    checkTestsAll = checkTestsAll && tests[test];",
+							"    console.log(test + \": \" + tests[test]);",
+							"}",
+							"",
+							"if (checkTestsAll) {",
+							"    console.log(\"Test case executed successfully\");",
+							"    console.log(\"Test case passed\");",
+							"} else {",
+							"    console.log(\"Test case failed\");",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 20,\n    \"employmentStatus\": \"full-time\",\n    \"hasAccommodationCosts\": true,\n    \"hasLivedInNZfor2Years\": true,\n    \"hasLivedInNZfor3Years\": true,\n    \"hasMedicalCertificate\": false,\n    \"hasReceivedPaidParentalLeavePayment\": true,\n    \"hasSeriousDisability\": false,\n    \"hasSocialHousing\": false,\n    \"holdsCommunityServicesCard\": true,\n    \"isInadequatelySupportedByPartner\": true,\n    \"isPrincipalCarerForProportion\": 100,\n    \"isStudyingFullTime\": false,\n    \"isUnableToSupportThemselves\": true,\n    \"needsDomesticSupport\": false,\n    \"normallyLivesInNZ\": true,\n    \"numberOfChildren\": 2,\n    \"receivesAccommodationSupport\": false,\n    \"receivesIncomeTestedBenefit\": false,\n    \"relationshipStatus\": \"single\",\n    \"temporarilyUnableToWork\": false,\n    \"worksWeeklyHours\": 60,\n    \"isPrincipalCarerForOneYearFromApplicationDate\": true,\n    \"isPrincipalCarer\": true,\n    \"isParent\": true,\n    \"isNZResident\": true,\n    \"isMaintainingChild\": true,\n    \"isCapableOfWorking\": 40\n  },\n  \"child\": {\n    \"Age\": 1,\n    \"hasMedicalCertification\": false,\n    \"hasSeriousDisability\": false,\n    \"isDependent\": true,\n    \"requiresConstantCare\": false\n  },\n  \"children\": {\n    \"dependentsUnder14\": 2\n  },\n  \"threshold\": {\n  \t\"isCommunityServicesCard\": true\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": "Benefit: Community Services Card (eligibility)"
+			},
+			"response": []
+		},
+		{
+			"name": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ef99174-6b22-44b4-bdce-312a728a579d",
+						"type": "text/javascript",
+						"exec": [
+							"var contentTypeHeaderExists = responseHeaders.hasOwnProperty(\"Content-Type\");",
+							"tests[\"Has Content-Type\"] = contentTypeHeaderExists;",
+							" ",
+							"if (contentTypeHeaderExists) {",
+							"    tests[\"Content-Type is application/json\"] = responseHeaders[\"Content-Type\"].has(\"application/json\");",
+							"}",
+							"",
+							"pm.test(\"Response must be valid and have a body\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"var jsonData  = pm.response.json();",
+							"var applicant = jsonData['applicant'];",
+							"",
+							"var applicantAge                     = applicant['Age'][0]['goal']['value'];",
+							"var applicantIsNZResident            = applicant['isNZResident'][0]['goal']['value'];",
+							"var applicantNormallyLivesInNZ       = applicant['normallyLivesInNZ'][0]['goal']['value'];",
+							"var thresholdIsCommunityServicesCard = jsonData['threshold']['isCommunityServicesCard'][0]['goal']['value'];",
+							"var benefitIsCommunityServicesCard   = jsonData['benefit']['isCommunityServicesCard'][0]['goal']['value'];",
+							"",
+							"    ",
+							"tests[\"Applicant is 16 years old or over\"]    = applicantAge >= 16;",
+							"tests[\"Applicant is a NZ Resident\"]           = applicantIsNZResident === true;",
+							"tests[\"Threshold is Community Services Card\"] = thresholdIsCommunityServicesCard === true;",
+							"tests[\"Benefit is Community Services Card\"]   = benefitIsCommunityServicesCard === true;",
+							"",
+							"var checkTestsAll = true;",
+							"for (var test in tests) {",
+							"    checkTestsAll = checkTestsAll && tests[test];",
+							"    console.log(test + \": \" + tests[test]);",
+							"}",
+							"",
+							"if (checkTestsAll) {",
+							"    console.log(\"Test case executed successfully\");",
+							"    console.log(\"Test case passed\");",
+							"} else {",
+							"    console.log(\"Test case failed\");",
+							"}",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwNDBkNDEyMy02MzE0LTQwMmMtOThhOS05NWE3ZGMyY2M3NjEiLCJleHAiOjE1MTg3MjY3MjAsImlhdCI6MTUxNjMwNzUyMH0.btZDUcB0Yjc8ls3VMC_GqryhAsnjzdyn76P_QVlZdmQ"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 20,\n    \"employmentStatus\": \"full-time\",\n    \"hasAccommodationCosts\": true,\n    \"hasLivedInNZfor2Years\": true,\n    \"hasLivedInNZfor3Years\": true,\n    \"hasMedicalCertificate\": false,\n    \"hasReceivedPaidParentalLeavePayment\": true,\n    \"hasSeriousDisability\": false,\n    \"hasSocialHousing\": false,\n    \"holdsCommunityServicesCard\": true,\n    \"isInadequatelySupportedByPartner\": true,\n    \"isPrincipalCarerForProportion\": 100,\n    \"isStudyingFullTime\": false,\n    \"isUnableToSupportThemselves\": true,\n    \"needsDomesticSupport\": false,\n    \"normallyLivesInNZ\": true,\n    \"numberOfChildren\": 2,\n    \"receivesAccommodationSupport\": false,\n    \"receivesIncomeTestedBenefit\": false,\n    \"relationshipStatus\": \"single\",\n    \"temporarilyUnableToWork\": false,\n    \"worksWeeklyHours\": 60,\n    \"isPrincipalCarerForOneYearFromApplicationDate\": true,\n    \"isPrincipalCarer\": true,\n    \"isParent\": true,\n    \"isNZResident\": true,\n    \"isMaintainingChild\": true,\n    \"isCapableOfWorking\": 40\n  },\n  \"child\": {\n    \"Age\": 1,\n    \"hasMedicalCertification\": false,\n    \"hasSeriousDisability\": false,\n    \"isDependent\": true,\n    \"requiresConstantCare\": false\n  },\n  \"children\": {\n    \"dependentsUnder14\": 2\n  },\n  \"threshold\": {\n  \t\"isCommunityServicesCard\": true\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": "Benefit: Community Services Card (eligibility)"
+			},
+			"response": []
+		}
+	]
+}
