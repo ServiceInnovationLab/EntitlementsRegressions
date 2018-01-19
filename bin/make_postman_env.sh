@@ -9,7 +9,7 @@ cat > $FILENAME <<- EndOfConfig
   "values": [
     {
       "enabled": true,
-      "key": "token\n",
+      "key": "token",
       "value": "$TOKEN",
       "type": "text"
     }
