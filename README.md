@@ -40,5 +40,5 @@ pip install -r requirements.txt
 ## Running the python tests
 
 ```
-nosetest pytests
+nosetests pytests
 ```
