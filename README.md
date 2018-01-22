@@ -20,3 +20,25 @@ This repo uses linter configuration from overcommit. to run:
 1. `overcommit --install`
 1. `overcommit --run`
 
+## Python Virtual env
+
+Make a new python virtual env to work in (you only need to do this once per project)
+```
+mkvirtualenv EntitlementsRegressions
+```
+
+When you want to run this tests, do this first:
+```
+workon EntitlementsRegressions
+```
+
+To install the dependencies in your virtual env:
+```
+pip install -r requirements.txt
+```
+
+## Running the python tests
+
+```
+nosetest pytests
+```

@@ -1,19 +1,29 @@
-import unittest
-import requests
+from . import Reasoner
 
-class TestAccomodationSupplement(unittest.TestCase):
+class TestAccomodationSupplement(Reasoner):
 
-  def testBasic(self):
-    url = 'https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft'
-    token = 'TOKEN'
-    headers = {'Content-Type': 'application/json','Authorization': 'Bearer {token}'.format(token=token)}
+    def testTahi(self):
+        body = {
+            "applicant": {
+                "Age": 30,
+                "normallyLivesInNZ": True,
+                "isNZResident": True,
+                "hasAccommodationCosts": True,
+                "hasSocialHousing": False,
+                "receivesAccommodationSupport": False
+            },
+            "threshold": {
+                "isAccommodationSupplement": True
+            },
+            "benefit": {
+                "isStudentAllowance": False
+            }
+        }
+        response = self.runReason(body)
+        print(response.text)
+        assert_equal(response.json(), {})
 
-    print headers
-    result = requests.post(url, headers=headers);
-    print(result.status_code)
-    print(result.text)
 
-    self.assertTrue(False)
 
 if __name__ == '__main__':
     unittest.main()
