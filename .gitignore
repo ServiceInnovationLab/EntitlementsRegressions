@@ -1,3 +1,4 @@
 node_modules/**
 /postman_env.json
 *.pyc
+.env
