@@ -1,15 +1,8 @@
-language: node_js
-node_js:
-  - "8.2.1"
+language: python
+python:
+  - "3.5"
 
 install:
-  - npm install newman
-
-before_script:
-  - node --version
-  - npm --version
-  - node_modules/.bin/newman --version
-  - ./bin/make_postman_env.sh
-
+  - pip install -r requirements.txt
 script:
-  - ./bin/run_all_collections.sh
+  - nosetest ./pytest
