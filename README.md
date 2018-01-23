@@ -39,7 +39,25 @@ make a `.env` file. See `env-example`
 ```
 nosetests pytests
 ```
+## For Mac users
 
+If you're having issues installing the Virtual Environment wrapper, try a clean install as follows:
+
+```
+$ pip uninstall virtualenvwrapper
+$ pip uninstall virtualenv
+
+# if you have python installed in brew
+$ brew uninstall python
+$ brew remove python
+
+$ brew install python
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+#or
+sudo easy_install virtualenvwrapper
+
+```
 ## Linters
 This repo uses linter configuration from overcommit. to run:
 1. `gem install overcommit`
