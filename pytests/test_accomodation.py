@@ -1,5 +1,6 @@
 from . import Reasoner
 
+
 class TestAccomodationSupplement(Reasoner):
 
     def testTahi(self):
@@ -21,10 +22,10 @@ class TestAccomodationSupplement(Reasoner):
         }
         response = self.runReason(body).json()
 
-        isAccommodationSupplement = response.get('benefit').get('isAccommodationSupplement')
+        isAccommodationSupplement = response.get(
+            'benefit').get('isAccommodationSupplement')
         print(isAccommodationSupplement)
         self.assertTrue(len(isAccommodationSupplement) > 0)
-
 
 
 if __name__ == '__main__':
