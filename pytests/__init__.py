@@ -2,10 +2,6 @@ import json
 import os
 import requests
 import unittest
-from nose.tools import assert_equal
-from nose.tools import assert_not_equal
-from nose.tools import assert_raises
-from nose.tools import raises
 
 from dotenv import load_dotenv, find_dotenv
 # Load config from .env

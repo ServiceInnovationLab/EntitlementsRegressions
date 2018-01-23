@@ -21,7 +21,7 @@ class TestAccomodationSupplement(Reasoner):
         }
         response = self.runReason(body)
         print(response.text)
-        assert_equal(response.json(), {})
+        self.assertEqual(response.json(), {})
 
 
 
