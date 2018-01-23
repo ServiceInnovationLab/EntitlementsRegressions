@@ -54,7 +54,7 @@ $ brew remove python
 $ brew install python
 $ pip install virtualenv
 $ pip install virtualenvwrapper
-#or
+# or
 $ sudo easy_install virtualenvwrapper
 
 ```
