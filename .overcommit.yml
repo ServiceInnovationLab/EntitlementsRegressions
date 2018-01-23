@@ -24,10 +24,12 @@ PreCommit:
     enabled: true
   # HardTabs:
   #   enabled: true
+  Pep8:
+    enabled: true
   AuthorEmail:
-    enabled: false
+    enabled: true
   AuthorName:
-    enabled: false
+    enabled: true
   JsonSyntax:
     enabled: true
   MergeConflicts:
