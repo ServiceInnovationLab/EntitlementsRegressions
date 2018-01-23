@@ -59,10 +59,10 @@ $ sudo easy_install virtualenvwrapper
 
 ```
 
-If you are still experiencing errors, you may need to fix your PATH in `~/.bash_profile`:
+If you're still experiencing errors, you may need to modify your PATH in `~/.bash_profile`:
 
 `vim ~/.bash_profile`
-add the following:
+add or modify the following:
 ```
 PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
 export PATH
