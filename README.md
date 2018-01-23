@@ -58,6 +58,21 @@ $ pip install virtualenvwrapper
 sudo easy_install virtualenvwrapper
 
 ```
+
+If you are still experiencing errors, you may need to fix your PATH in `~/.bash_profile`:
+
+`vim ~/.bash_profile`
+add the following:
+```
+PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
+export PATH
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+source /usr/local/bin/virtualenvwrapper.sh
+```
+
 ## Linters
 This repo uses linter configuration from overcommit. to run:
 1. `gem install overcommit`
