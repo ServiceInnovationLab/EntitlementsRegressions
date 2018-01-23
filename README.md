@@ -55,7 +55,7 @@ $ brew install python
 $ pip install virtualenv
 $ pip install virtualenvwrapper
 #or
-sudo easy_install virtualenvwrapper
+$ sudo easy_install virtualenvwrapper
 
 ```
 
