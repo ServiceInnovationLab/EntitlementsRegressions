@@ -19,9 +19,11 @@ class TestAccomodationSupplement(Reasoner):
                 "isStudentAllowance": False
             }
         }
-        response = self.runReason(body)
-        print(response.text)
-        self.assertEqual(response.json(), {})
+        response = self.runReason(body).json()
+
+        isAccommodationSupplement = response.get('benefit').get('isAccommodationSupplement')
+        print(isAccommodationSupplement)
+        self.assertTrue(len(isAccommodationSupplement) > 0)
 
 
 
