@@ -12,27 +12,42 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cf6e4b7a-ed7e-4f7e-9367-28fffb4a6b66",
+						"id": "db6658fb-8010-4a19-a363-7ccbe6e38215",
 						"type": "text/javascript",
 						"exec": [
+							"var expected = {",
+							"                \"dependencies\": {",
+							"                    \"factsUsed\": [",
+							"                        \"applicant.isNZResident\",",
+							"                        \"applicant.normallyLivesInNZ\",",
+							"                        \"threshold.isCommunityServicesCard\"",
+							"                    ],",
+							"                    \"rulesUsed\": [",
+							"                        \"f-66605238-513c-4cc2-a5a9-771f6be5b4ac\"",
+							"                    ]",
+							"                },",
+							"                \"goal\": {",
+							"                    \"modality\": \"PERMITTED\",",
+							"                    \"negated\": false,",
+							"                    \"value\": true,",
+							"                    \"id\": \"benefit.isCommunityServicesCard\",",
+							"                    \"type\": \"BOOL\"",
+							"                },",
+							"                \"reasoningResult\": \"CONCLUSIVE\"",
+							"            }",
+							"",
 							"var jsonData  = pm.response.json();",
-							"var applicant = jsonData['applicant'];",
+							"var result = jsonData.benefit['isCommunityServicesCard'][1];",
 							"",
-							"var applicantAge                     = applicant['Age'][0]['goal']['value'];",
-							"var applicantIsNZResident            = applicant['isNZResident'][0]['goal']['value'];",
-							"var applicantNormallyLivesInNZ       = applicant['normallyLivesInNZ'][0]['goal']['value'];",
-							"var thresholdIsCommunityServicesCard = jsonData['threshold']['isCommunityServicesCard'][0]['goal']['value'];",
-							"var benefitIsCommunityServicesCard   = jsonData['benefit']['isCommunityServicesCard'][0]['goal']['id'];",
-							"",
-							"tests[\"Status code is 200\"]                          = responseCode.code === 200;",
-							"tests[\"Applicant should be 16 years old or over\"]    = applicantAge >= 16;",
-							"tests[\"Applicant should be a NZ Resident\"]           = applicantIsNZResident === true;",
-							"tests[\"Threshold should be Community Services Card\"] = thresholdIsCommunityServicesCard === true;",
-							"tests[\"Benefit should be Community Services Card\"]   = benefitIsCommunityServicesCard === 'benefit.isCommunityServicesCard';",
-							"",
-							"",
-							"",
-							""
+							"pm.test(\"Community Services Card result must be included\", function () {",
+							"    pm.expect(result.goal.id).to.eq(\"benefit.isCommunityServicesCard\");",
+							"});",
+							"pm.test(\"Community Services Card result should be conclusive\", function () {",
+							"    pm.expect(result.reasoningResult).to.eq(\"CONCLUSIVE\");",
+							"});",
+							"pm.test(\"Community Services Card should be permitted\", function () {",
+							"    pm.expect(result.goal.modality).to.eq(\"PERMITTED\");",
+							"});"
 						]
 					}
 				}
@@ -42,7 +57,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer {{TOKEN}}"
+						"value": "Bearer {{token}}"
 					},
 					{
 						"key": "Content-Type",

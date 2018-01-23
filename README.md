@@ -14,13 +14,7 @@ Runs regression tests against Regulation as a Platform - tests a set of persona 
 1. node_modules/.bin/newman run tests/*.json -e ./postman_env.json
 
 
-## Linters
-This repo uses linter configuration from overcommit. to run:
-1. `gem install overcommit`
-1. `overcommit --install`
-1. `overcommit --run`
-
-## Python Virtual env
+## Setting up environment
 
 Make a new python virtual env to work in (you only need to do this once per project)
 ```
@@ -37,8 +31,17 @@ To install the dependencies in your virtual env:
 pip install -r requirements.txt
 ```
 
+make a `.env` file. See `env-example`
+
+
 ## Running the python tests
 
 ```
 nosetests pytests
 ```
+
+## Linters
+This repo uses linter configuration from overcommit. to run:
+1. `gem install overcommit`
+1. `overcommit --install`
+1. `overcommit --run`
