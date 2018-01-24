@@ -39,6 +39,39 @@ make a `.env` file. See `env-example`
 ```
 nosetests pytests
 ```
+## For Mac users
+
+If you're having issues installing the Virtual Environment wrapper, try a clean install as follows:
+
+```
+$ pip uninstall virtualenvwrapper
+$ pip uninstall virtualenv
+
+# if you have python installed in brew
+$ brew uninstall python
+$ brew remove python
+
+$ brew install python
+$ pip install virtualenv
+$ pip install virtualenvwrapper
+# or
+$ sudo easy_install virtualenvwrapper
+
+```
+
+If you're still experiencing errors, you may need to modify your PATH in `~/.bash_profile`:
+
+`vim ~/.bash_profile`
+add or modify the following:
+```
+PATH="/Library/Frameworks/Python.framework/Versions/3.5/bin:${PATH}"
+export PATH
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+source /usr/local/bin/virtualenvwrapper.sh
+```
 
 ## Linters
 This repo uses linter configuration from overcommit. to run:
