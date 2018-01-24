@@ -1,51 +1,24 @@
 {
 	"info": {
-		"name": "Raap Entitlements",
+		"name": "Accommodation Supplement",
 		"_postman_id": "47e00e8e-f8ca-531d-69e7-95eaaccd5d4a",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Accomodation Supplement",
+			"name": "Most basic PERMITTED example",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "108994e1-5f87-4429-b4e3-a79da53b7a36",
+						"id": "a8bfbe36-3666-493f-b4f8-26f8261ece17",
 						"type": "text/javascript",
 						"exec": [
-							"// ensure healthy response code",
-							"var expected = {",
-							"                \"dependencies\": {",
-							"                    \"factsUsed\": [",
-							"                        \"applicant.normallyLivesInNZ\",",
-							"                        \"applicant.isNZResident\",",
-							"                        \"threshold.isAccommodationSupplement\",",
-							"                        \"benefit.isStudentAllowance\",",
-							"                        \"applicant.hasAccommodationCosts\",",
-							"                        \"applicant.hasSocialHousing\",",
-							"                        \"applicant.receivesAccommodationSupport\"",
-							"                    ],",
-							"                    \"rulesUsed\": [",
-							"                        \"f-cf3512cc-800a-4f84-b474-5f5bbdc1772a\"",
-							"                    ]",
-							"                },",
-							"                \"goal\": {",
-							"                    \"modality\": \"PERMITTED\",",
-							"                    \"negated\": false,",
-							"                    \"value\": true,",
-							"                    \"id\": \"benefit.isAccommodationSupplement\",",
-							"                    \"type\": \"BOOL\"",
-							"                },",
-							"                \"reasoningResult\": \"CONCLUSIVE\"",
-							"            }",
-							"",
-							"tests[\"Status code is 200\"] = responseCode.code === 200;",
-							"",
-							"",
 							"var jsonData = pm.response.json();",
-							"var result = jsonData.benefit['isAccommodationSupplement'][2];",
+							"var accommodation = jsonData.benefit['isAccommodationSupplement'];",
+							"// Last result",
+							"var result = accommodation[accommodation.length - 1];",
 							"",
 							"pm.test(\"Accommodation supplement result must be included\", function () {",
 							"    pm.expect(result.goal.id).to.eq(\"benefit.isAccommodationSupplement\");",
@@ -79,7 +52,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n    \n  },\n  \"threshold\": {\n  \t\"isAccommodationSupplement\": true\n  },\n  \"benefit\": {\n  \t\"isStudentAllowance\": false\n  }\n}"
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": true\n\t}\n  }\n}"
 				},
 				"url": {
 					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
@@ -108,7 +81,631 @@
 				},
 				"description": ""
 			},
-			"response": []
+			"response": [
+				{
+					"id": "36358ab5-ebdf-4ed2-b307-df399ddac35f",
+					"name": "PERMITTED example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": true\n\t}\n  }\n}"
+						},
+						"url": {
+							"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+							"protocol": "https",
+							"host": [
+								"nz",
+								"raap",
+								"d61",
+								"io"
+							],
+							"path": [
+								"api",
+								"v0",
+								"domain",
+								"nz-entitlements-eligibility",
+								"reasoning",
+								"reason"
+							],
+							"query": [
+								{
+									"key": "criteria",
+									"value": "draft",
+									"equals": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive",
+							"name": "Connection",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip",
+							"name": "Content-Encoding",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 Jan 2018 01:16:00 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "nginx/1.11.3",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 429,
+					"body": "{\"child\":{\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"requiresConstantCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.requiresConstantCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"child.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isDependent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.isDependent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasMedicalCertification\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasMedicalCertification\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"income\":{\"fromMaintenancePayments\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.fromMaintenancePayments\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ofApplicantAndSpouse\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.ofApplicantAndSpouse\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"applicant\":{\"hasMedicalCertificate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasMedicalCertificate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarer\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarer\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isInadequatelySupportedByPartner\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isInadequatelySupportedByPartner\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasAccommodationCosts\":[{\"goal\":{\"value\":true,\"id\":\"applicant.hasAccommodationCosts\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"holdsCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.holdsCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"normallyLivesInNZ\":[{\"goal\":{\"value\":true,\"id\":\"applicant.normallyLivesInNZ\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"relationshipStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.relationshipStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudyingFullTime\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isStudyingFullTime\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"goal\":{\"value\":30.0,\"id\":\"applicant.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"FACT\"}],\"isParent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"employmentStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.employmentStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForOneYearFromApplicationDate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"receivesAccommodationSupport\":[{\"goal\":{\"value\":false,\"id\":\"applicant.receivesAccommodationSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"worksWeeklyHours\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.worksWeeklyHours\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSocialHousing\":[{\"goal\":{\"value\":false,\"id\":\"applicant.hasSocialHousing\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"needsDomesticSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.needsDomesticSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForProportion\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.isPrincipalCarerForProportion\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isNZResident\":[{\"goal\":{\"value\":true,\"id\":\"applicant.isNZResident\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"receivesIncomeTestedBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.receivesIncomeTestedBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasLivedInNZfor2Years\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isMaintainingChild\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isMaintainingChild\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasReceivedPaidParentalLeavePayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasReceivedPaidParentalLeavePayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnableToSupportThemselves\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isUnableToSupportThemselves\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"numberOfChildren\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.numberOfChildren\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"benefit\":{\"isBBtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-a3d4f2f4-5b3c-4c71-a5a4-2d8910b6e889\",\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isOrphansBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ffa4b498-93e2-4469-b12f-8de6ef8f573a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSoleParentSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cb657647-7813-4c56-befa-4cbd96fdcad7\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAccommodationSupplement\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"threshold.income.AccommodationSupplement\",\"applicant.isNZResident\",\"applicant.hasAccommodationCosts\",\"threshold.cash.AccommodationSupplement\",\"applicant.hasSocialHousing\",\"applicant.receivesAccommodationSupport\"],\"rulesUsed\":[\"f-cf3512cc-800a-4f84-b474-5f5bbdc1772a\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isJobSeekerSupport\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-309b5ee0-23c0-43d4-9338-f66232e14cf4\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSupportedLivingPayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-81eb43fc-f5c9-47ad-8844-dfce9ef7a8be\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudentAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-a26f7b68-8d81-4790-9a5d-9b94b51741e1\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.receivesIncomeTestedBenefit\",\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\",\"applicant.isStudyingFullTime\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-225ba39c-ee8d-42de-b6bb-453e977ec62a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesInWorkTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-234dc5e4-67ad-4051-a865-1b0c36152205\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnsupportedChildsBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ae4cda52-04c8-4c86-a6bf-c6939fc494d9\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isEmergencyBenefit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cd3a1a3a-eefd-4657-9219-554ccd535585\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isHomeHelp\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e80a7c01-07cd-4ea2-a8f1-ba218f237eed\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAAtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isWorkingForFamiliesMinimumFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e485aad6-6fd6-47f4-ae3e-63837699eb4b\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isYoungParentPayment\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-c53cf163-495a-440d-8924-5451becc1d15\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ChildDisabilityAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-366b62c1-0a0d-4cee-b850-fa48ea4f9579\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-456be78c-cf54-4375-bc0c-7e09d57ca440\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesParentalTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-d9b65b42-bf50-454e-b218-c08827b25a14\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.hasReceivedPaidParentalLeavePayment\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.receivesIncomeTestedBenefit\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"threshold\":{\"income\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.income.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}]},\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"cash\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.cash.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"HomeHelp\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.cash.HomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}},\"parents\":{\"areUnableToProvideSufficientCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areUnableToProvideSufficientCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"areDeceasedMissingOrIncapableThroughDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"recipient\":{\"prepareForEmployment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"recipient.prepareForEmployment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}}"
+				}
+			]
+		},
+		{
+			"name": "too much cash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfd492ce-1d1f-4e62-8e0d-78d972d8b497",
+						"type": "text/javascript",
+						"exec": [
+							"// var jsonData = pm.response.json();",
+							"// var accommodation = jsonData.benefit['isAccommodationSupplement'];",
+							"// // Last result",
+							"// var result = accommodation[accommodation.length - 1];",
+							"",
+							"// pm.test(\"Accommodation supplement result must be included\", function () {",
+							"//     pm.expect(result.goal.id).to.eq(\"benefit.isAccommodationSupplement\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement result should be conclusive\", function () {",
+							"//     pm.expect(result.reasoningResult).to.eq(\"CONCLUSIVE\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement should be permitted\", function () {",
+							"//     pm.expect(result.goal.modality).to.eq(\"PERMITTED\");",
+							"// });",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": false\n\t}\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": [
+				{
+					"id": "27c1da2b-677d-41ef-ba14-d119a7facf51",
+					"name": "too much cash",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"applicant\": {\n    \"Age\": 30,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": false\n\t}\n  }\n}"
+						},
+						"url": {
+							"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+							"protocol": "https",
+							"host": [
+								"nz",
+								"raap",
+								"d61",
+								"io"
+							],
+							"path": [
+								"api",
+								"v0",
+								"domain",
+								"nz-entitlements-eligibility",
+								"reasoning",
+								"reason"
+							],
+							"query": [
+								{
+									"key": "criteria",
+									"value": "draft",
+									"equals": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive",
+							"name": "Connection",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip",
+							"name": "Content-Encoding",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 Jan 2018 01:14:24 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "nginx/1.11.3",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 1033,
+					"body": "{\"child\":{\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"requiresConstantCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.requiresConstantCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"child.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isDependent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.isDependent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasMedicalCertification\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasMedicalCertification\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"income\":{\"fromMaintenancePayments\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.fromMaintenancePayments\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ofApplicantAndSpouse\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.ofApplicantAndSpouse\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"applicant\":{\"hasMedicalCertificate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasMedicalCertificate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarer\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarer\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isInadequatelySupportedByPartner\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isInadequatelySupportedByPartner\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasAccommodationCosts\":[{\"goal\":{\"value\":true,\"id\":\"applicant.hasAccommodationCosts\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"holdsCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.holdsCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"normallyLivesInNZ\":[{\"goal\":{\"value\":true,\"id\":\"applicant.normallyLivesInNZ\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"relationshipStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.relationshipStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudyingFullTime\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isStudyingFullTime\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"goal\":{\"value\":30.0,\"id\":\"applicant.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"FACT\"}],\"isParent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"employmentStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.employmentStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForOneYearFromApplicationDate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"receivesAccommodationSupport\":[{\"goal\":{\"value\":false,\"id\":\"applicant.receivesAccommodationSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"worksWeeklyHours\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.worksWeeklyHours\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSocialHousing\":[{\"goal\":{\"value\":false,\"id\":\"applicant.hasSocialHousing\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"needsDomesticSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.needsDomesticSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForProportion\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.isPrincipalCarerForProportion\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isNZResident\":[{\"goal\":{\"value\":true,\"id\":\"applicant.isNZResident\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"receivesIncomeTestedBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.receivesIncomeTestedBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasLivedInNZfor2Years\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isMaintainingChild\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isMaintainingChild\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasReceivedPaidParentalLeavePayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasReceivedPaidParentalLeavePayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnableToSupportThemselves\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isUnableToSupportThemselves\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"numberOfChildren\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.numberOfChildren\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"benefit\":{\"isBBtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-a3d4f2f4-5b3c-4c71-a5a4-2d8910b6e889\",\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isOrphansBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ffa4b498-93e2-4469-b12f-8de6ef8f573a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSoleParentSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cb657647-7813-4c56-befa-4cbd96fdcad7\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAccommodationSupplement\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"threshold.income.AccommodationSupplement\",\"applicant.isNZResident\",\"applicant.hasAccommodationCosts\",\"threshold.cash.AccommodationSupplement\",\"applicant.hasSocialHousing\",\"applicant.receivesAccommodationSupport\"],\"rulesUsed\":[\"f-7683c46f-8502-44a7-b980-d235a13747eb\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isJobSeekerSupport\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-309b5ee0-23c0-43d4-9338-f66232e14cf4\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSupportedLivingPayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-81eb43fc-f5c9-47ad-8844-dfce9ef7a8be\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudentAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-a26f7b68-8d81-4790-9a5d-9b94b51741e1\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.receivesIncomeTestedBenefit\",\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\",\"applicant.isStudyingFullTime\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-225ba39c-ee8d-42de-b6bb-453e977ec62a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesInWorkTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-234dc5e4-67ad-4051-a865-1b0c36152205\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnsupportedChildsBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ae4cda52-04c8-4c86-a6bf-c6939fc494d9\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isEmergencyBenefit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cd3a1a3a-eefd-4657-9219-554ccd535585\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isHomeHelp\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e80a7c01-07cd-4ea2-a8f1-ba218f237eed\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAAtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isWorkingForFamiliesMinimumFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e485aad6-6fd6-47f4-ae3e-63837699eb4b\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isYoungParentPayment\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-c53cf163-495a-440d-8924-5451becc1d15\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ChildDisabilityAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-366b62c1-0a0d-4cee-b850-fa48ea4f9579\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-456be78c-cf54-4375-bc0c-7e09d57ca440\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesParentalTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-d9b65b42-bf50-454e-b218-c08827b25a14\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.hasReceivedPaidParentalLeavePayment\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.receivesIncomeTestedBenefit\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"threshold\":{\"income\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.income.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}]},\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"cash\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":false,\"id\":\"threshold.cash.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"HomeHelp\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.cash.HomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}},\"parents\":{\"areUnableToProvideSufficientCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areUnableToProvideSufficientCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"areDeceasedMissingOrIncapableThroughDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"recipient\":{\"prepareForEmployment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"recipient.prepareForEmployment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}}"
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5878ca8-5eb6-49ef-b9aa-a53774e08b55",
+						"type": "text/javascript",
+						"exec": [
+							"// var jsonData = pm.response.json();",
+							"// var accommodation = jsonData.benefit['isAccommodationSupplement'];",
+							"",
+							"// // Last result",
+							"",
+							"// var result = accommodation[1];",
+							"",
+							"",
+							"// pm.test(\"Accommodation supplement result must be included\", function () {",
+							"//     pm.expect(result.goal.id).to.eq(\"benefit.isAccommodationSupplement\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement result should be conclusive\", function () {",
+							"//     pm.expect(result.reasoningResult).to.eq(\"CONCLUSIVE\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement should be forbidden\", function () {",
+							"//     pm.expect(result.goal.modality).to.eq(\"FORBIDDEN\");",
+							"// });",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"applicant\": {\n    \"Age\": 19,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": true\n\t}\n  },\n  \"benefit\": {\n  \t\"isStudentAllowance\": true\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": [
+				{
+					"id": "f98c17be-f067-4d26-ac2e-e063d8a23487",
+					"name": "Student",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"applicant\": {\n    \"Age\": 19,\n    \"normallyLivesInNZ\": true,\n    \"isNZResident\": true,\n    \"hasAccommodationCosts\": true,\n    \"hasSocialHousing\": false,\n    \"receivesAccommodationSupport\": false\n  },\n  \"threshold\": {\n\t\"income\": {\n\t\t\"AccommodationSupplement\": true\t\n\t},\n\t\"cash\": {\n\t\t\"AccommodationSupplement\": true\n\t}\n  },\n  \"benefit\": {\n  \t\"isStudentAllowance\": true\n  }\n}"
+						},
+						"url": {
+							"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+							"protocol": "https",
+							"host": [
+								"nz",
+								"raap",
+								"d61",
+								"io"
+							],
+							"path": [
+								"api",
+								"v0",
+								"domain",
+								"nz-entitlements-eligibility",
+								"reasoning",
+								"reason"
+							],
+							"query": [
+								{
+									"key": "criteria",
+									"value": "draft",
+									"equals": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive",
+							"name": "Connection",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip",
+							"name": "Content-Encoding",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 Jan 2018 01:12:03 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "nginx/1.11.3",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 1182,
+					"body": "{\"child\":{\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"requiresConstantCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.requiresConstantCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"child.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isDependent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.isDependent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasMedicalCertification\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasMedicalCertification\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"income\":{\"fromMaintenancePayments\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.fromMaintenancePayments\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ofApplicantAndSpouse\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.ofApplicantAndSpouse\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"applicant\":{\"hasMedicalCertificate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasMedicalCertificate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarer\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarer\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isInadequatelySupportedByPartner\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isInadequatelySupportedByPartner\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasAccommodationCosts\":[{\"goal\":{\"value\":true,\"id\":\"applicant.hasAccommodationCosts\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"holdsCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.holdsCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"normallyLivesInNZ\":[{\"goal\":{\"value\":true,\"id\":\"applicant.normallyLivesInNZ\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"relationshipStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.relationshipStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudyingFullTime\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isStudyingFullTime\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"goal\":{\"value\":19.0,\"id\":\"applicant.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"FACT\"}],\"isParent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"employmentStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.employmentStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForOneYearFromApplicationDate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"receivesAccommodationSupport\":[{\"goal\":{\"value\":false,\"id\":\"applicant.receivesAccommodationSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"worksWeeklyHours\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.worksWeeklyHours\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSocialHousing\":[{\"goal\":{\"value\":false,\"id\":\"applicant.hasSocialHousing\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"needsDomesticSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.needsDomesticSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForProportion\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.isPrincipalCarerForProportion\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isNZResident\":[{\"goal\":{\"value\":true,\"id\":\"applicant.isNZResident\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"receivesIncomeTestedBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.receivesIncomeTestedBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasLivedInNZfor2Years\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isMaintainingChild\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isMaintainingChild\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasReceivedPaidParentalLeavePayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasReceivedPaidParentalLeavePayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnableToSupportThemselves\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isUnableToSupportThemselves\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"numberOfChildren\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.numberOfChildren\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"benefit\":{\"isBBtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-a3d4f2f4-5b3c-4c71-a5a4-2d8910b6e889\",\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isOrphansBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ffa4b498-93e2-4469-b12f-8de6ef8f573a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSoleParentSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cb657647-7813-4c56-befa-4cbd96fdcad7\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAccommodationSupplement\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"threshold.income.AccommodationSupplement\",\"applicant.isNZResident\",\"applicant.hasAccommodationCosts\",\"threshold.cash.AccommodationSupplement\",\"applicant.hasSocialHousing\",\"applicant.receivesAccommodationSupport\"],\"rulesUsed\":[\"f-cf3512cc-800a-4f84-b474-5f5bbdc1772a\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isJobSeekerSupport\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-309b5ee0-23c0-43d4-9338-f66232e14cf4\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSupportedLivingPayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-81eb43fc-f5c9-47ad-8844-dfce9ef7a8be\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudentAllowance\":[{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-a26f7b68-8d81-4790-9a5d-9b94b51741e1\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.receivesIncomeTestedBenefit\",\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\",\"applicant.isStudyingFullTime\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"goal\":{\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-225ba39c-ee8d-42de-b6bb-453e977ec62a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesInWorkTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-234dc5e4-67ad-4051-a865-1b0c36152205\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnsupportedChildsBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ae4cda52-04c8-4c86-a6bf-c6939fc494d9\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isEmergencyBenefit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cd3a1a3a-eefd-4657-9219-554ccd535585\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isHomeHelp\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e80a7c01-07cd-4ea2-a8f1-ba218f237eed\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAAtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isWorkingForFamiliesMinimumFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e485aad6-6fd6-47f4-ae3e-63837699eb4b\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isYoungParentPayment\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-c53cf163-495a-440d-8924-5451becc1d15\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ChildDisabilityAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-366b62c1-0a0d-4cee-b850-fa48ea4f9579\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"benefit.isStudentAllowance\"],\"rulesUsed\":[\"f-456be78c-cf54-4375-bc0c-7e09d57ca440\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesParentalTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-d9b65b42-bf50-454e-b218-c08827b25a14\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.hasReceivedPaidParentalLeavePayment\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.receivesIncomeTestedBenefit\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"threshold\":{\"income\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.income.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}]},\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"cash\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.cash.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"HomeHelp\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.cash.HomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}},\"parents\":{\"areUnableToProvideSufficientCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areUnableToProvideSufficientCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"areDeceasedMissingOrIncapableThroughDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"recipient\":{\"prepareForEmployment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"recipient.prepareForEmployment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}}"
+				}
+			]
+		},
+		{
+			"name": "too young",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a0a4702-9564-4004-9f03-7e5aee12d6f3",
+						"type": "text/javascript",
+						"exec": [
+							"// var jsonData = pm.response.json();",
+							"// var accommodation = jsonData.benefit['isAccommodationSupplement'];",
+							"// // Last result",
+							"// var result = accommodation[accommodation.length - 1];",
+							"",
+							"// pm.test(\"Accommodation supplement result must be included\", function () {",
+							"//     pm.expect(result.goal.id).to.eq(\"benefit.isAccommodationSupplement\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement result should be conclusive\", function () {",
+							"//     pm.expect(accommodation).to.include(\"CONCLUSIVE\");",
+							"// });",
+							"",
+							"// pm.test(\"Accommodation supplement should be forbidden\", function () {",
+							"//     pm.expect(result.goal.modality).to.eq(\"FORBIDDEN\");",
+							"// });",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"applicant\": {\n    \t\"Age\": 15,\n    \t\"normallyLivesInNZ\": true,\n    \t\"isNZResident\": true,\n    \t\"hasAccommodationCosts\": true,\n    \t\"hasSocialHousing\": false,\n    \t\"receivesAccommodationSupport\": false\n    },\n\t\"threshold\": {\n\t\t\"income\": {\n\t\t\t\"AccommodationSupplement\": true\t\n\t\t},\n\t\t\"cash\": {\n\t\t\t\"AccommodationSupplement\": true\n\t\t}\n   },\n  \"benefit\": {\n  \t\t\"isStudentAllowance\": false\n  }\n}"
+				},
+				"url": {
+					"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+					"protocol": "https",
+					"host": [
+						"nz",
+						"raap",
+						"d61",
+						"io"
+					],
+					"path": [
+						"api",
+						"v0",
+						"domain",
+						"nz-entitlements-eligibility",
+						"reasoning",
+						"reason"
+					],
+					"query": [
+						{
+							"key": "criteria",
+							"value": "draft",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": [
+				{
+					"id": "935774e0-fb05-44af-b7a9-41ca086e08d3",
+					"name": "too young",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"applicant\": {\n    \t\"Age\": 15,\n    \t\"normallyLivesInNZ\": true,\n    \t\"isNZResident\": true,\n    \t\"hasAccommodationCosts\": true,\n    \t\"hasSocialHousing\": false,\n    \t\"receivesAccommodationSupport\": false\n    },\n\t\"threshold\": {\n\t\t\"income\": {\n\t\t\t\"AccommodationSupplement\": true\t\n\t\t},\n\t\t\"cash\": {\n\t\t\t\"AccommodationSupplement\": true\n\t\t}\n   },\n  \"benefit\": {\n  \t\t\"isStudentAllowance\": false\n  }\n}"
+						},
+						"url": {
+							"raw": "https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility/reasoning/reason?criteria=draft",
+							"protocol": "https",
+							"host": [
+								"nz",
+								"raap",
+								"d61",
+								"io"
+							],
+							"path": [
+								"api",
+								"v0",
+								"domain",
+								"nz-entitlements-eligibility",
+								"reasoning",
+								"reason"
+							],
+							"query": [
+								{
+									"key": "criteria",
+									"value": "draft",
+									"equals": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"_postman_previewtype": "text",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive",
+							"name": "Connection",
+							"description": "Options that are desired for the connection"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip",
+							"name": "Content-Encoding",
+							"description": "The type of encoding used on the data."
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 24 Jan 2018 01:16:41 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Server",
+							"value": "nginx/1.11.3",
+							"name": "Server",
+							"description": "A name for the server"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked",
+							"name": "Transfer-Encoding",
+							"description": "The form of encoding used to safely transfer the entity to the user. Currently defined methods are: chunked, compress, deflate, gzip, identity."
+						}
+					],
+					"cookie": [],
+					"responseTime": 380,
+					"body": "{\"child\":{\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"requiresConstantCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.requiresConstantCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"child.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isDependent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.isDependent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasMedicalCertification\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"child.hasMedicalCertification\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"income\":{\"fromMaintenancePayments\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.fromMaintenancePayments\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ofApplicantAndSpouse\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"income.ofApplicantAndSpouse\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"applicant\":{\"hasMedicalCertificate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasMedicalCertificate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarer\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarer\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isInadequatelySupportedByPartner\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isInadequatelySupportedByPartner\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSeriousDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasSeriousDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasAccommodationCosts\":[{\"goal\":{\"value\":true,\"id\":\"applicant.hasAccommodationCosts\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"holdsCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.holdsCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"normallyLivesInNZ\":[{\"goal\":{\"value\":true,\"id\":\"applicant.normallyLivesInNZ\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"relationshipStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.relationshipStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudyingFullTime\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isStudyingFullTime\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"Age\":[{\"goal\":{\"value\":15.0,\"id\":\"applicant.Age\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"FACT\"}],\"isParent\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isParent\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"employmentStatus\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.employmentStatus\",\"type\":\"STRING\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForOneYearFromApplicationDate\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"receivesAccommodationSupport\":[{\"goal\":{\"value\":false,\"id\":\"applicant.receivesAccommodationSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"worksWeeklyHours\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.worksWeeklyHours\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasSocialHousing\":[{\"goal\":{\"value\":false,\"id\":\"applicant.hasSocialHousing\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"needsDomesticSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.needsDomesticSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isPrincipalCarerForProportion\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.isPrincipalCarerForProportion\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isNZResident\":[{\"goal\":{\"value\":true,\"id\":\"applicant.isNZResident\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"receivesIncomeTestedBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.receivesIncomeTestedBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasLivedInNZfor2Years\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.hasLivedInNZfor2Years\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isMaintainingChild\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isMaintainingChild\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"hasReceivedPaidParentalLeavePayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"applicant.hasReceivedPaidParentalLeavePayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnableToSupportThemselves\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"applicant.isUnableToSupportThemselves\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"numberOfChildren\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":null,\"id\":\"applicant.numberOfChildren\",\"type\":\"NUMERIC\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"benefit\":{\"isBBtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-a3d4f2f4-5b3c-4c71-a5a4-2d8910b6e889\",\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isBBtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isOrphansBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ffa4b498-93e2-4469-b12f-8de6ef8f573a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isOrphansBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSoleParentSupport\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cb657647-7813-4c56-befa-4cbd96fdcad7\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSoleParentSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAccommodationSupplement\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"threshold.income.AccommodationSupplement\",\"applicant.isNZResident\",\"applicant.hasAccommodationCosts\",\"threshold.cash.AccommodationSupplement\",\"applicant.hasSocialHousing\",\"applicant.receivesAccommodationSupport\"],\"rulesUsed\":[\"f-4a399690-82fd-4669-869c-48d104f063d4\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isJobSeekerSupport\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-309b5ee0-23c0-43d4-9338-f66232e14cf4\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isJobSeekerSupport\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isSupportedLivingPayment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-81eb43fc-f5c9-47ad-8844-dfce9ef7a8be\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isSupportedLivingPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isStudentAllowance\":[{\"goal\":{\"value\":false,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-a26f7b68-8d81-4790-9a5d-9b94b51741e1\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.receivesIncomeTestedBenefit\",\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\",\"applicant.isStudyingFullTime\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isStudentAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"applicant.normallyLivesInNZ\"],\"rulesUsed\":[\"f-225ba39c-ee8d-42de-b6bb-453e977ec62a\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesInWorkTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-234dc5e4-67ad-4051-a865-1b0c36152205\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesInWorkTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isUnsupportedChildsBenefit\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-ae4cda52-04c8-4c86-a6bf-c6939fc494d9\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"AMBIGUOUS\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isUnsupportedChildsBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isEmergencyBenefit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-cd3a1a3a-eefd-4657-9219-554ccd535585\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isEmergencyBenefit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isHomeHelp\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e80a7c01-07cd-4ea2-a8f1-ba218f237eed\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isHomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isAAtest\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-37a3e60f-02bc-4591-aeb9-6fe45783d37e\"]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isAAtest\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"}],\"isWorkingForFamiliesMinimumFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-e485aad6-6fd6-47f4-ae3e-63837699eb4b\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesMinimumFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isYoungParentPayment\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-c53cf163-495a-440d-8924-5451becc1d15\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isYoungParentPayment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"ChildDisabilityAllowance\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":false,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[\"applicant.isNZResident\"],\"rulesUsed\":[\"f-366b62c1-0a0d-4cee-b850-fa48ea4f9579\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.ChildDisabilityAllowance\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesFamilyTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"benefit.isStudentAllowance\"],\"rulesUsed\":[\"f-456be78c-cf54-4375-bc0c-7e09d57ca440\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesFamilyTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"isWorkingForFamiliesParentalTaxCredit\":[{\"dependencies\":{\"factsUsed\":[\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\"],\"rulesUsed\":[\"f-d9b65b42-bf50-454e-b218-c08827b25a14\"]},\"goal\":{\"modality\":\"FORBIDDEN\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"CONCLUSIVE\"},{\"dependencies\":{\"factsUsed\":[\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"applicant.hasReceivedPaidParentalLeavePayment\",\"applicant.normallyLivesInNZ\",\"applicant.isNZResident\",\"applicant.receivesIncomeTestedBenefit\",\"parents.areUnableToProvideSufficientCare\",\"applicant.isPrincipalCarerForOneYearFromApplicationDate\",\"applicant.isParent\",\"child.isDependent\"],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":true,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"},{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"modality\":\"PERMITTED\",\"negated\":false,\"value\":true,\"id\":\"benefit.isWorkingForFamiliesParentalTaxCredit\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"threshold\":{\"income\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.income.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}]},\"isCommunityServicesCard\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.isCommunityServicesCard\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"cash\":{\"AccommodationSupplement\":[{\"goal\":{\"value\":true,\"id\":\"threshold.cash.AccommodationSupplement\",\"type\":\"BOOL\"},\"reasoningResult\":\"FACT\"}],\"HomeHelp\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"threshold.cash.HomeHelp\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}},\"parents\":{\"areUnableToProvideSufficientCare\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areUnableToProvideSufficientCare\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}],\"areDeceasedMissingOrIncapableThroughDisability\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"parents.areDeceasedMissingOrIncapableThroughDisability\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]},\"recipient\":{\"prepareForEmployment\":[{\"dependencies\":{\"factsUsed\":[],\"rulesUsed\":[]},\"goal\":{\"value\":true,\"id\":\"recipient.prepareForEmployment\",\"type\":\"BOOL\"},\"reasoningResult\":\"INCOMPLETE\"}]}}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8ad99994-2da0-40cc-bb42-e326cd20e782",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "485afa39-b75a-41c9-aa64-3292e43b145d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
