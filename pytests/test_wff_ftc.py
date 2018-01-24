@@ -67,6 +67,3 @@ class TestWorkingForFamiliesFamilyTaxCreditNotEnoughInfo(Reasoner):
         # print(self.subject)
         print(self.findConclusiveReasoningResult())
         self.assertFalse(self.is_conclusive)
-
-if __name__ == '__main__':
-    unittest.main()
