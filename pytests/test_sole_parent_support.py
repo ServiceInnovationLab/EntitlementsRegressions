@@ -27,7 +27,8 @@ class TestSoleParentSupport(Reasoner):
             "isUnableToSupportThemselves": True
         },
         "child": {
-            "isDependent": True
+            "isDependent": True,
+            "Age": 5
         },
         "income": {
             "ofApplicantAndSpouse": 200,
