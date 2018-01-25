@@ -28,6 +28,10 @@ class TestSoleParentSupport(Reasoner):
         },
         "child": {
             "isDependent": True
+        },
+        "income": {
+            "ofApplicantAndSpouse": 200,
+            "fromMaintenancePayments": 200
         }
 
     }
