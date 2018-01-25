@@ -12,8 +12,11 @@ then benefit.isOrphansBenefit is PERMITTED
 from . import Reasoner
 
 
-class TestOrphansBenefitForbiddenByDefault(Reasoner):
-    key = 'isAccommodationSupplement'
+class OrphansTests(Reasoner):
+    key = 'isOrphansBenefit'
+
+
+class TestOrphansBenefitForbiddenByDefault(OrphansTests):
 
     body = {
         "applicant": {
@@ -31,9 +34,7 @@ class TestOrphansBenefitForbiddenByDefault(Reasoner):
         self.assertTrue(self.is_forbidden)
 
 
-class TestOrphansBenefitForGrandparent(Reasoner):
-
-    key = 'isOrphansBenefit'
+class TestOrphansBenefitForGrandparent(OrphansTests):
 
     body = {
         "applicant": {
@@ -52,9 +53,7 @@ class TestOrphansBenefitForGrandparent(Reasoner):
         self.assertTrue(self.is_permitted)
 
 
-class TestOrphansBenefitForCarer(Reasoner):
-
-    key = 'isOrphansBenefit'
+class TestOrphansBenefitForCarer(OrphansTests):
 
     body = {
         "applicant": {
@@ -73,9 +72,7 @@ class TestOrphansBenefitForCarer(Reasoner):
         self.assertTrue(self.is_permitted)
 
 
-class TestOrphansBenefitForChildForbidden(Reasoner):
-
-    key = 'isOrphansBenefit'
+class TestOrphansBenefitForChildForbidden(OrphansTests):
 
     body = {
         "applicant": {
