@@ -36,4 +36,3 @@ class TestSoleParentSupport(Reasoner):
         pprint(self.subject)
         self.assertTrue(self.is_conclusive)
         self.assertTrue(self.is_permitted)
-
