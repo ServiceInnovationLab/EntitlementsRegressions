@@ -12,18 +12,8 @@ If applicant.isParent
     and (income.ofApplicantAndSpouse + income.fromMaintenancePayments) < 628
         then benefit.isSoleParentSupport is PERMITTED
 
-    If not benefit.ChildDisabilityAllowance
-        and not benefit.isSoleParentSupport
-        and not benefit.isOrphansBenefit
-        and not benefit.isSupportedLivingPayment
-        and not benefit.isUnsupportedChildsBenefit
-        and applicant.isUnableToSupportThemselves
-        and not benefit.ChildDisabilityAllowance
-        and not benefit.isAccommodationSupplement
-        and applicant.isNZResident
-        and applicant.normallyLivesInNZ
-            then benefit.isEmergencyBenefit is PERMITTED
 """
+
 
 class TestSoleParentSupport(Reasoner):
     key = 'isSoleParentSupport'
@@ -38,15 +28,6 @@ class TestSoleParentSupport(Reasoner):
         },
         "child": {
             "isDependent": True
-        },
-        "benefit": {
-            "ChildDisabilityAllowance": False,
-            "isSoleParentSupport": False,
-            "isOrphansBenefit": False,
-            "isSupportedLivingPayment": False,
-            "isUnsupportedChildsBenefit": False,
-            "ChildDisabilityAllowance": False,
-            "isAccommodationSupplement": False
         }
 
     }
