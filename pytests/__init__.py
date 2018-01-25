@@ -2,6 +2,7 @@ import json
 import os
 import requests
 import unittest
+from pprint import pprint
 
 from dotenv import load_dotenv, find_dotenv
 # Load config from .env
@@ -14,6 +15,9 @@ class Reasoner(unittest.TestCase):
 
     def setUp(self):
         self.runReason()
+
+    def print_response(self):
+        pprint(self.subject)
 
     @property
     def subject(self):
