@@ -31,22 +31,22 @@ class Reasoner(unittest.TestCase):
 
     @property
     def is_permitted(self):
-        return (self.findConclusiveReasoningResult().get('goal')
-                == self._expected_goal_response(modality='PERMITTED'))
+        return self._expect_goal_response(modality='PERMITTED')
 
     @property
     def is_forbidden(self):
-        return (self.findConclusiveReasoningResult().get('goal')
-                == self._expected_goal_response(modality='FORBIDDEN'))
+        return self._expect_goal_response(modality='FORBIDDEN')
 
-    def _expected_goal_response(self, modality):
-        return {
+    def _expect_goal_response(self, modality):
+        expected = {
             "modality": modality,
             "negated": False,
             "value": True,
             "id": "benefit.{key}".format(key=self.key),
             "type": "BOOL"
         }
+        goal = self.findConclusiveReasoningResult().get('goal')
+        return goal == expected
 
     def runReason(self):
         """Run reasoning on the server"""
