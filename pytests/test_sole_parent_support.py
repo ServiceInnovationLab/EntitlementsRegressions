@@ -24,7 +24,8 @@ class TestSoleParentSupport(Reasoner):
             "isNZResident": True,
             "isParent": True,
             "isMaintainingChild": True,
-            "isUnableToSupportThemselves": True
+            "isUnableToSupportThemselves": True,
+            "hasLivedInNZfor2Years": True
         },
         "child": {
             "isDependent": True,
