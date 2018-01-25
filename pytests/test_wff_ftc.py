@@ -1,4 +1,6 @@
 from . import Reasoner
+from nose import SkipTest
+
 """
 Benefit: Working for Families - Family Tax Credit (eligibility):
 If applicant.isParent
@@ -39,6 +41,7 @@ class TestWorkingForFamiliesFamilyTaxCredit(Reasoner):
         }
     }
 
+    @SkipTest
     def test_reasoning(self):
         self.assertTrue(self.is_conclusive)
         self.assertTrue(self.is_permitted)
@@ -63,7 +66,7 @@ class TestWorkingForFamiliesFamilyTaxCreditNotEnoughInfo(Reasoner):
         }
     }
 
+    @SkipTest
     def testNotEnoughInfo(self):
-        # print(self.subject)
         print(self.findConclusiveReasoningResult())
         self.assertFalse(self.is_conclusive)
