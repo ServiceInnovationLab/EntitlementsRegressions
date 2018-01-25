@@ -9,6 +9,7 @@ Benefit: Community Services Card (eligibility):
             then benefit.isCommunityServicesCard is PERMITTED
 """
 
+
 class TestCommunityServicesCard(Reasoner):
     key = 'isCommunityServicesCard'
 
