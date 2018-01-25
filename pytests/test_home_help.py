@@ -11,6 +11,7 @@ Benefit: Home Help (eligibility in policy for applicant with disability):
             then benefit.isHomeHelp is PERMITTED
 """
 
+
 class TestHomeHelp(Reasoner):
     key = 'isHomeHelp'
 
