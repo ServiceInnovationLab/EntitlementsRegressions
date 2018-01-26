@@ -11,7 +11,6 @@ If applicant.isParent
     and child.isDependent
     and (income.ofApplicantAndSpouse + income.fromMaintenancePayments) < 628
         then benefit.isSoleParentSupport is PERMITTED
-
 """
 
 
