@@ -15,7 +15,7 @@ Benefit: Young Parent Payment (eligibility):
 """
 
 
-class TestYoungParentSupport(Reasoner):
+class TestYoungParentPayment(Reasoner):
     key = 'isYoungParentPayment'
 
     body = {
