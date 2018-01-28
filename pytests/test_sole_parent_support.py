@@ -19,12 +19,11 @@ class TestSoleParentSupport(Reasoner):
 
     body = {
         "applicant": {
-            "normallyLivesInNZ": True,
-            "isNZResident": True,
             "isParent": True,
+            "isInadequatelySupportedByPartner": True,
             "isMaintainingChild": True,
-            "isUnableToSupportThemselves": True,
-            "hasLivedInNZfor2Years": True
+            "isNZResident": True,
+            "Age": 20
         },
         "child": {
             "isDependent": True,
