@@ -41,12 +41,6 @@ class Reasoner(unittest.TestCase):
     def is_forbidden(self):
         return self._expect_goal_response(modality='FORBIDDEN')
 
-    @property
-    def is_conclusively_forbidden(self):
-        if (self.findConclusiveReasoningResult() is not None):
-            return self._expect_goal_response(modality='FORBIDDEN')
-
-
     def _expect_goal_response(self, modality):
         expected = {
             "modality": modality,

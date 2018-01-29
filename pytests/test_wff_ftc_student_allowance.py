@@ -12,34 +12,24 @@ Benefit: Working for Families - Family Tax Credit (eligibility):
 """
 
 
-class TestWorkingForFamiliesFamilyTaxCredit(Reasoner):
+class TestWorkingForFamiliesFamilyTaxCreditStudentAllowanceForbidden(Reasoner):
 
     key = 'isWorkingForFamiliesFamilyTaxCredit'
 
     body = {
         "applicant": {
             "isParent": True,
-            "worksWeeklyHours": 20,
+            "worksWeeklyHours": 37,
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True,
-            "isPrincipalCarerForOneYearFromApplicationDate": False,
-            "Age": 16,
-            "isNZResident": False,
-            "normallyLivesInNZ": False
-        },
-        "benefit": {
-            "isStudentAllowance": False,
-            "isOrphansBenefit": False
-        },
-        "parents": {
-            "areDeceasedMissingOrIncapableThroughDisability": False
-        },
-        "child": {
-            "isDependent": False
+            "isStudyingFullTime": True,
+            "Age": 65,
+            "normallyLivesInNZ": True,
+            "isNZResident": True,
+            "receivesIncomeTestedBenefit": False
         }
-
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_permitted)
+        self.assertTrue(self.is_forbidden)
         self.assertTrue(self.is_conclusive)
