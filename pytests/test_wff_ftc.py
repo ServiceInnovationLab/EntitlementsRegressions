@@ -37,7 +37,6 @@ class TestWorkingForFamiliesFamilyTaxCredit(Reasoner):
         "child": {
             "isDependent": False
         }
-
     }
 
     def test_reasoning(self):
