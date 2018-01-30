@@ -1,7 +1,19 @@
 from . import Reasoner
 
 
-class TestSupportedLivingPaymentCarer(Reasoner):
+class TestSupportedLivingPaymentDefault(Reasoner):
+    """
+    Forbidden by default
+    """
+    key = 'isSupportedLivingPayment'
+    body = {}
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_conclusive)
+        self.assertTrue(self.is_forbidden)
+
+
+class TestSupportedLivingPaymentCarer(TestSupportedLivingPaymentDefault):
     """
     Benefit: Part 1E Supported Living Payment (eligible child carer applicant):
     If applicant.isPrincipalCarer
@@ -11,8 +23,6 @@ class TestSupportedLivingPaymentCarer(Reasoner):
         and child.hasMedicalCertification
     then benefit.isSupportedLivingPayment is PERMITTED
     """
-
-    key = 'isSupportedLivingPayment'
 
     body = {
         "applicant": {
@@ -32,7 +42,7 @@ class TestSupportedLivingPaymentCarer(Reasoner):
         self.assertTrue(self.is_permitted)
 
 
-class TestSupportedLivingPaymentSelfApplicant(Reasoner):
+class TestSupportedLivingPaymentSelfAppl(TestSupportedLivingPaymentDefault):
     """
     Benefit: Part 1E Supported Living Payment (eligible self applicant):
     If applicant.isUnableToSupportThemselves
@@ -43,8 +53,6 @@ class TestSupportedLivingPaymentSelfApplicant(Reasoner):
     then benefit.isSupportedLivingPayment is PERMITTED
     """
 
-    key = 'isSupportedLivingPayment'
-
     body = {
         "applicant": {
             "isUnableToSupportThemselves": True,
@@ -52,6 +60,16 @@ class TestSupportedLivingPaymentSelfApplicant(Reasoner):
             "Age": 45,
             "hasMedicalCertificate": True,
             "hasSeriousDisability": True
+        }
+    }
+
+
+class TestSupportedLivingPaymentAmbigious(TestSupportedLivingPaymentDefault):
+    body = {
+        "applicant": {
+            "isUnableToSupportThemselves": True,
+            "isNZResident": True,
+            # "Age": 15,
         },
         "child": {
             "isDependent": True,
@@ -62,4 +80,23 @@ class TestSupportedLivingPaymentSelfApplicant(Reasoner):
 
     def test_reasoning(self):
         self.assertTrue(self.is_conclusive)
-        self.assertTrue(self.is_permitted)
+        self.assertTrue(self.is_forbidden)
+
+
+class TestSupportedLivingTooYoung(TestSupportedLivingPaymentDefault):
+    body = {
+        "applicant": {
+            "isUnableToSupportThemselves": True,
+            "isNZResident": True,
+            "Age": 15
+        },
+        "child": {
+            "isDependent": True,
+            "hasSeriousDisability": True,
+            "hasMedicalCertification": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_conclusive)
+        self.assertTrue(self.is_forbidden)
