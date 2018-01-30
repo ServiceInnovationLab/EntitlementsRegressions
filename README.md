@@ -1,6 +1,8 @@
 # EntitlementsRegressions
 
 [![Build Status](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions.svg?branch=master)](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/ServiceInnovationLab/EntitlementsRegressions.svg?columns=all)](https://waffle.io/ServiceInnovationLab/EntitlementsRegressions)
+
 
 Runs regression tests against Regulation as a Platform - tests a set of persona are entitled to the correct benefits.
 
