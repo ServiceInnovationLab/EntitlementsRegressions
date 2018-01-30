@@ -1,7 +1,7 @@
 from . import Reasoner
 
 
-class TestSupportedLivingPayment(Reasoner):
+class TestSupportedLivingPaymentCarer(Reasoner):
     """
     Benefit: Part 1E Supported Living Payment (eligible child carer applicant):
     If applicant.isPrincipalCarer
@@ -32,7 +32,7 @@ class TestSupportedLivingPayment(Reasoner):
         self.assertTrue(self.is_permitted)
 
 
-class TestSupportedLivingPayment(Reasoner):
+class TestSupportedLivingPaymentSelfApplicant(Reasoner):
     """
     Benefit: Part 1E Supported Living Payment (eligible self applicant):
     If applicant.isUnableToSupportThemselves
