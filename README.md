@@ -1,3 +1,4 @@
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/ServiceInnovationLab/EntitlementsRegressions.png?columns=all)](https://waffle.io/ServiceInnovationLab/EntitlementsRegressions?utm_source=badge)
 # EntitlementsRegressions
 
 [![Build Status](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions.svg?branch=master)](https://travis-ci.org/ServiceInnovationLab/EntitlementsRegressions)
