@@ -1,5 +1,5 @@
 from . import Reasoner
-from pprint import pprint
+
 """
  If applicant.isNZResident
     and applicant.normallyLivesInNZ
@@ -20,12 +20,11 @@ class TestStudentAllowance(Reasoner):
             "normallyLivesInNZ": True,
             "Age": 65,
             "isStudyingFullTime": True,
-            "receivesIncomeTestedBenefit": True
+            "receivesIncomeTestedBenefit": False
         }
 
     }
 
     def test_reasoning(self):
-        pprint(self.subject)
-        # self.assertTrue(self.is_conclusive)
-        # self.assertTrue(self.is_permitted)
+        self.assertTrue(self.is_conclusive)
+        self.assertTrue(self.is_permitted)
