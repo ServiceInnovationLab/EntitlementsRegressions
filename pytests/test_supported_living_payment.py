@@ -13,7 +13,7 @@ class TestSupportedLivingPaymentDefault(Reasoner):
         self.assertTrue(self.is_forbidden)
 
 
-class TestSupportedLivingPaymentCarer(TestSupportedLivingPaymentDefault):
+class TestSupportedLivingPaymentCarer(Reasoner):
     """
     Benefit: Part 1E Supported Living Payment (eligible child carer applicant):
     If applicant.isPrincipalCarer
@@ -24,6 +24,7 @@ class TestSupportedLivingPaymentCarer(TestSupportedLivingPaymentDefault):
     then benefit.isSupportedLivingPayment is PERMITTED
     """
 
+    key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
             "isPrincipalCarer": True,
@@ -42,7 +43,7 @@ class TestSupportedLivingPaymentCarer(TestSupportedLivingPaymentDefault):
         self.assertTrue(self.is_permitted)
 
 
-class TestSupportedLivingPaymentSelfAppl(TestSupportedLivingPaymentDefault):
+class TestSupportedLivingPaymentSelfAppl(Reasoner):
     """
     Benefit: Part 1E Supported Living Payment (eligible self applicant):
     If applicant.isUnableToSupportThemselves
@@ -53,6 +54,7 @@ class TestSupportedLivingPaymentSelfAppl(TestSupportedLivingPaymentDefault):
     then benefit.isSupportedLivingPayment is PERMITTED
     """
 
+    key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
             "isUnableToSupportThemselves": True,
@@ -64,7 +66,8 @@ class TestSupportedLivingPaymentSelfAppl(TestSupportedLivingPaymentDefault):
     }
 
 
-class TestSupportedLivingPaymentAmbigious(TestSupportedLivingPaymentDefault):
+class TestSupportedLivingPaymentAmbigious(Reasoner):
+    key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
             "isUnableToSupportThemselves": True,
@@ -83,7 +86,8 @@ class TestSupportedLivingPaymentAmbigious(TestSupportedLivingPaymentDefault):
         self.assertTrue(self.is_forbidden)
 
 
-class TestSupportedLivingTooYoung(TestSupportedLivingPaymentDefault):
+class TestSupportedLivingTooYoung(Reasoner):
+    key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
             "isUnableToSupportThemselves": True,
