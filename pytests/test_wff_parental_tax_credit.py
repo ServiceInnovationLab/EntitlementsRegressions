@@ -1,7 +1,11 @@
 from . import Reasoner
 
 
-class TestWFFParentalTaxCredit(Reasoner):
+class TestKey(Reasoner):
+    key = 'isWorkingForFamiliesParentalTaxCredit'
+
+
+class TestWFFParentalTaxCreditDefault(TestKey):
 
     """
     Benefit: Working for Families
@@ -11,8 +15,6 @@ class TestWFFParentalTaxCredit(Reasoner):
         - Parental Tax Credit (eligibility)
     """
 
-    key = 'isWorkingForFamiliesParentalTaxCredit'
-
     body = {}
 
     def test_reasoning(self):
@@ -20,7 +22,7 @@ class TestWFFParentalTaxCredit(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFParentalTaxCreditEligibility(Reasoner):
+class TestWFFParentalTaxCreditEligibility(TestKey):
 
     """
         Benefit: Working for Families - Parental Tax Credit (eligibility):
@@ -29,8 +31,6 @@ class TestWFFParentalTaxCreditEligibility(Reasoner):
             and not applicant.hasReceivedPaidParentalLeavePayment
                 then benefit.isWorkingForFamiliesParentalTaxCredit is PERMITTED
     """
-
-    key = 'isWorkingForFamiliesParentalTaxCredit'
 
     body = {
         "applicant": {
@@ -45,7 +45,7 @@ class TestWFFParentalTaxCreditEligibility(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFParentalTaxCreditEligUnsupportedChildsBenefit(Reasoner):
+class TestWFFParentalTaxCreditUnsupportedChildsBenefit(TestKey):
 
     """
         Benefit: Working for Families - Parental Tax Credit
@@ -62,8 +62,6 @@ class TestWFFParentalTaxCreditEligUnsupportedChildsBenefit(Reasoner):
                 and child.isDependent
                     then benefit.isUnsupportedChildsBenefit is PERMITTED
     """
-
-    key = 'isWorkingForFamiliesParentalTaxCredit'
 
     body = {
         "applicant": {
@@ -84,7 +82,7 @@ class TestWFFParentalTaxCreditEligUnsupportedChildsBenefit(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFParentalTaxCreditEligOrphansBenefit(Reasoner):
+class TestWFFParentalTaxCreditOrphansBenefit(TestKey):
 
     """
         Benefit: Working for Families - Parental Tax Credit
@@ -102,8 +100,6 @@ class TestWFFParentalTaxCreditEligOrphansBenefit(Reasoner):
             and applicant.normallyLivesInNZ
                 then benefit.isOrphansBenefit is PERMITTED
     """
-
-    key = 'isWorkingForFamiliesParentalTaxCredit'
 
     body = {
         "applicant": {

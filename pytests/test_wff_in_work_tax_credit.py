@@ -1,7 +1,11 @@
 from . import Reasoner
 
 
-class TestWFFInWorkTaxCredDefault(Reasoner):
+class TestKey(Reasoner):
+    key = 'isWorkingForFamiliesInWorkTaxCredit'
+
+
+class TestWFFInWorkTaxCreditDefault(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit (default state):
@@ -10,8 +14,6 @@ class TestWFFInWorkTaxCredDefault(Reasoner):
     Benefit: Working for Families - In Work Tax Credit (eligibility)
     """
 
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
-
     body = {}
 
     def test_reasoning(self):
@@ -19,7 +21,7 @@ class TestWFFInWorkTaxCredDefault(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFInWorkTaxCred(Reasoner):
+class TestWFFInWorkTaxCredit(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit (eligibility):
@@ -40,8 +42,6 @@ class TestWFFInWorkTaxCred(Reasoner):
             D. Forbidden is receiving "Parental Tax Credit"
     """
 
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
-
     body = {
         "applicant": {
             "isParent": True,
@@ -58,7 +58,7 @@ class TestWFFInWorkTaxCred(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFInWorkTaxCredForSingles(Reasoner):
+class TestWFFInWorkTaxCreditForSingles(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit
@@ -67,8 +67,6 @@ class TestWFFInWorkTaxCredForSingles(Reasoner):
             and applicant.worksWeeklyHours < 20
                 then benefit.isWorkingForFamiliesInWorkTaxCredit is FORBIDDEN
     """
-
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
 
     body = {
         "applicant": {
@@ -88,7 +86,7 @@ class TestWFFInWorkTaxCredForSingles(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFInWorkTaxCredForCouples(Reasoner):
+class TestWFFInWorkTaxCreditForCouples(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit
@@ -97,8 +95,6 @@ class TestWFFInWorkTaxCredForCouples(Reasoner):
             and applicant.worksWeeklyHours < 30
                 then benefit.isWorkingForFamiliesInWorkTaxCredit is FORBIDDEN
     """
-
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
 
     body = {
         "applicant": {
@@ -118,7 +114,7 @@ class TestWFFInWorkTaxCredForCouples(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFInWorkTaxCredForbiddenIfStudAllow(Reasoner):
+class TestWFFInWorkTaxCreditStudentAllowance(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit
@@ -126,8 +122,6 @@ class TestWFFInWorkTaxCredForbiddenIfStudAllow(Reasoner):
         If benefit.isStudentAllowance is PERMITTED
             then benefit.isWorkingForFamiliesInWorkTaxCredit is FORBIDDEN
     """
-
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
 
     body = {
         "applicant": {
@@ -149,7 +143,7 @@ class TestWFFInWorkTaxCredForbiddenIfStudAllow(Reasoner):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFInWorkTaxCredForbiddenIfParentTaxCred(Reasoner):
+class TestWFFInWorkTaxCreditParentalTaxCredit(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit
@@ -167,8 +161,6 @@ class TestWFFInWorkTaxCredForbiddenIfParentTaxCred(Reasoner):
                 then benefit.isWorkingForFamiliesParentalTaxCredit is PERMITTED
     """
 
-    key = 'isWorkingForFamiliesInWorkTaxCredit'
-
     body = {
         "applicant": {
             "isParent": True,
@@ -180,81 +172,6 @@ class TestWFFInWorkTaxCredForbiddenIfParentTaxCred(Reasoner):
         },
         "income": {
             "ofApplicantAndSpouse": 0
-        }
-    }
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_forbidden)
-        self.assertTrue(self.is_conclusive)
-
-
-class TestWFFInWorkTCMinFamTaxCredDef(Reasoner):
-
-    """
-    Benefit: Working for Families - Minimum Family Tax Credit
-    (default state): Default
-    benefit.isWorkingForFamiliesMinimumFamilyTaxCredit is FORBIDDEN
-    Overriden by: Benefit: Working for Families
-    - Minimum Family Tax Credit (eligibility)
-
-    """
-
-    key = 'isWorkingForFamiliesMinimumFamilyTaxCredit'
-
-    body = {}
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_forbidden)
-        self.assertTrue(self.is_conclusive)
-
-
-class TestWFFInWorkTCMinFamTaxCredOrphans(Reasoner):
-
-    """
-    Benefit: Working for Families
-    - Minimum Family Tax Credit
-    A. Forbidden if orphans benefit:
-        If benefit.isOrphansBenefit is PERMITTED
-            then benefit.isWorkingForFamiliesMinimumFamilyTaxCredit
-            is FORBIDDEN
-    """
-    key = 'isWorkingForFamiliesMinimumFamilyTaxCredit'
-
-    body = {
-        "parents": {
-            "areDeceasedMissingOrIncapableThroughDisability": True
-        }
-    }
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_forbidden)
-        self.assertTrue(self.is_conclusive)
-
-
-class TestWFFInWorkTCMinFamTaxCredUnsup(Reasoner):
-
-    """
-    Benefit: Working for Families - Minimum Family Tax Credit
-    B. Forbidden if Unsupported Childs Benefit:
-        If benefit.isUnsupportedChildsBenefit
-        is PERMITTED
-            then benefit.isWorkingForFamiliesMinimumFamilyTaxCredit
-            is FORBIDDEN
-    """
-    key = 'isWorkingForFamiliesMinimumFamilyTaxCredit'
-
-    body = {
-        "applicant": {
-            "isPrincipalCarerForOneYearFromApplicationDate": True,
-            "Age": 18,
-            "isParent": False,
-            "isNZResident": True
-        },
-        "parents": {
-            "areDeceasedMissingOrIncapableThroughDisability": True
-        },
-        "child": {
-            "isDependent": True
         }
     }
 
