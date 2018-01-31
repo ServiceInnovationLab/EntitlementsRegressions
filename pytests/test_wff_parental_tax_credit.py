@@ -25,9 +25,9 @@ class TestWFFParentalTaxCreditEligibility(Reasoner):
     """
         Benefit: Working for Families - Parental Tax Credit (eligibility):
         If 33 ≤ applicant.isPrincipalCarerForProportion
-        and not applicant.receivesIncomeTestedBenefit
-        and not applicant.hasReceivedPaidParentalLeavePayment
-        then benefit.isWorkingForFamiliesParentalTaxCredit is PERMITTED
+            and not applicant.receivesIncomeTestedBenefit
+            and not applicant.hasReceivedPaidParentalLeavePayment
+                then benefit.isWorkingForFamiliesParentalTaxCredit is PERMITTED
     """
 
     key = 'isWorkingForFamiliesParentalTaxCredit'
