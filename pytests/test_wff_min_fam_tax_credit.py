@@ -13,7 +13,7 @@ Overriden by: Benefit: Working for Families - Minimum Family Tax Credit
 """
 
 
-class TestWFFMinimumFamilyTC(TestKey):
+class TestWFFMinimumFamilyTCDefault(TestKey):
 
     body = {}
 
