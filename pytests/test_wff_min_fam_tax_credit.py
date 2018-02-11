@@ -1,16 +1,22 @@
 from . import Reasoner
 
+"""
+Applicant IS eligible if:
+
+- Income from applicant and spouse is  less than 23816
+- You work at least 30 hours each week (for a couple),
+- or 20 hours each week as a single parent
+
+
+Applicant is NOT eligible if they are:
+
+- are receiving a student allowance
+- self-employed
+"""
+
 
 class TestKey(Reasoner):
     key = 'isWorkingForFamiliesMinimumFamilyTaxCredit'
-
-
-"""
-Benefit: Working for Families - Minimum Family Tax Credit (default state):
-Default benefit.isWorkingForFamiliesMinimumFamilyTaxCredit is FORBIDDEN
-Overriden by: Benefit: Working for Families - Minimum Family Tax Credit
-(eligibility)
-"""
 
 
 class TestWFFMinimumFamilyTCDefault(TestKey):
@@ -19,32 +25,72 @@ class TestWFFMinimumFamilyTCDefault(TestKey):
 
     def test_reasoning(self):
         self.assertTrue(self.is_conclusive)
-        self.assertTrue(self.is_permitted)  # FIXME:should be forbidden
+        self.assertTrue(self.is_permitted)
 
 
 """
-Benefit: Working for Families - Minimum Family Tax Credit (eligibility):
-If income.ofApplicantAndSpouse < 23816
-and applicant.worksWeeklyHours < 30
-then benefit.isWorkingForFamiliesMinimumFamilyTaxCredit is PERMITTED
-    Overriden by: Benefit: Working for Families - Minimum Family Tax Credit
-    A. Forbidden if orphans benefit, Benefit: Working for Families
-        - Minimum Family Tax Credit
-    B. Forbidden if Unsupported Childs Benefit
+Update from Raap
 """
 
 
-class TestWFFMinimumFamilyTC(TestKey):
+class TestWFFMinimumFamilyTCSingle(TestKey):
 
     body = {
         "income": {
-            "ofApplicantAndSpouse": 2000
+            "ofApplicant": 2000
         },
         "applicant": {
-            "worksWeeklyHours": 20
+            "worksWeeklyHours": 20,
+            "relationshipStatus": "single",
+            "isSelfEmployed": False
+        },
+        "benefit": {
+            "isStudentAllowance": False
         }
     }
 
     def test_reasoning(self):
         self.assertTrue(self.is_conclusive)
-        self.assertTrue(self.is_permitted)  # Working
+        self.assertTrue(self.is_permitted)
+
+
+class TestWFFMinimumFamilyTCCouple(TestKey):
+
+    body = {
+        "income": {
+            "ofApplicantandSpouse": 2000
+        },
+        "applicant": {
+            "worksWeeklyHours": 32,
+            "relationshipStatus": "",
+            "isSelfEmployed": False
+        },
+        "benefit": {
+            "isStudentAllowance": False
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_conclusive)
+        self.assertTrue(self.is_permitted)
+
+
+class TestWFFMinimumFamilyTCSelfEmployed(TestKey):
+
+    body = {
+        "income": {
+            "ofApplicant": 2000
+        },
+        "applicant": {
+            "worksWeeklyHours": 20,
+            "relationshipStatus": "single",
+            "isSelfEmployed": True
+        },
+        "benefit": {
+            "isStudentAllowance": False
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_conclusive)
+        self.assertTrue(self.is_forbidden)
