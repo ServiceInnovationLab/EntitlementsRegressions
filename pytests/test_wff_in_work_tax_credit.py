@@ -42,8 +42,7 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
 
     You can't get in-work tax credit if you receive:
     - an income-tested benefit
-    - a student allowance, or
-    - Children's Pension.
+    - a student allowance
 
     Overridden by: Benefit: Working for Families - In Work Tax Credit
     B. (eligibility work requirements for couples),
@@ -67,8 +66,7 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
             "ofApplicantAndSpouse": 2
         },
         "benefit": {
-            "isStudentAllowance": False,
-            "isChildrensPension": False
+            "isStudentAllowance": False
         }
     }
 
