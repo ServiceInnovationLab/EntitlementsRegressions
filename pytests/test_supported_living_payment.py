@@ -72,7 +72,6 @@ class TestSupportedLivingPaymentAmbigious(Reasoner):
         "applicant": {
             "isUnableToSupportThemselves": True,
             "isNZResident": True,
-            # "Age": 15,
         },
         "child": {
             "isDependent": True,
