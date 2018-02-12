@@ -46,22 +46,26 @@ class TestSupportedLivingPaymentCarer(Reasoner):
 class TestSupportedLivingPaymentSelfAppl(Reasoner):
     """
     Benefit: Part 1E Supported Living Payment (eligible self applicant):
-    If applicant.isUnableToSupportThemselves
-        and applicant.isNZResident
+    If applicant.isNZResident
         and 16 ≤ applicant.Age
         and applicant.hasMedicalCertificate
         and applicant.hasSeriousDisability
+        and threshold.income.SupportedLivingPayment
     then benefit.isSupportedLivingPayment is PERMITTED
     """
 
     key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
-            "isUnableToSupportThemselves": True,
             "isNZResident": True,
             "Age": 45,
             "hasMedicalCertificate": True,
             "hasSeriousDisability": True
+        },
+        "threshold": {
+            "income": {
+                "SupportedLivingPayment": True
+            }
         }
     }
 
@@ -70,13 +74,17 @@ class TestSupportedLivingPaymentAmbigious(Reasoner):
     key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
-            "isUnableToSupportThemselves": True,
             "isNZResident": True,
         },
         "child": {
             "isDependent": True,
             "hasSeriousDisability": True,
             "hasMedicalCertification": True
+        },
+        "threshold": {
+            "income": {
+                "SupportedLivingPayment": True
+            }
         }
     }
 
@@ -89,7 +97,6 @@ class TestSupportedLivingTooYoung(Reasoner):
     key = 'isSupportedLivingPayment'
     body = {
         "applicant": {
-            "isUnableToSupportThemselves": True,
             "isNZResident": True,
             "Age": 15
         },
@@ -97,6 +104,11 @@ class TestSupportedLivingTooYoung(Reasoner):
             "isDependent": True,
             "hasSeriousDisability": True,
             "hasMedicalCertification": True
+        },
+        "threshold": {
+            "income": {
+                "SupportedLivingPayment": True
+            }
         }
     }
 
