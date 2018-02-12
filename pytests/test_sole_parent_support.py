@@ -2,15 +2,15 @@ from . import Reasoner
 from pprint import pprint
 """
 Benefit: Part 1B Sole Parent Support (eligibility in legislation):
-If applicant.isParent
-    and applicant.isInadequatelySupportedByPartner
-    and applicant.isMaintainingChild
-    and applicant.isNZResident
-    and 20 ≤ applicant.Age
-    and child.Age < 14
-    and child.isDependent
-    and (income.ofApplicantAndSpouse + income.fromMaintenancePayments) < 628
-        then benefit.isSoleParentSupport is PERMITTED
+    If applicant.isParent
+        and applicant.isInadequatelySupportedByPartner
+        and applicant.isMaintainingChild
+        and applicant.isNZResident
+        and 20 ≤ applicant.Age
+        and child.Age < 14
+        and child.isDependent
+        and threshold.income.SoleParentSupport
+    then benefit.isSoleParentSupport is PERMITTED
 """
 
 
@@ -32,6 +32,11 @@ class TestSoleParentSupport(Reasoner):
         "income": {
             "ofApplicantAndSpouse": 200,
             "fromMaintenancePayments": 200
+        },
+        "threshold": {
+            "income": {
+                "SoleParentSupport": True
+            }
         }
 
     }
