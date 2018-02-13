@@ -60,6 +60,7 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
         self.assertTrue(self.is_conclusive)
         self.assertTrue(self.is_permitted)
 
+
 """
 Benefit: Childcare subsidy (eligibility for under 5s):
 If child.Age < 5
