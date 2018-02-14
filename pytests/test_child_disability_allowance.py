@@ -7,7 +7,7 @@ Benefit: Part 1D Child with Serious Disability (eligible):
 
 If child.isDependent
     and child.hasSeriousDisability
-    and child.requiresConstantCare
+    and child.requiresConstantCareAndAttention
     and child.hasMedicalCertification
     and applicant.isPrincipalCarer
     and applicant.isNZResident
@@ -27,7 +27,7 @@ class TestChildDisabilityAllowance(Reasoner):
         "child": {
             "isDependent": True,
             "hasSeriousDisability": True,
-            "requiresConstantCare": True,
+            "requiresConstantCareAndAttention": True,
             "hasMedicalCertification": True
         }
     }
@@ -48,7 +48,7 @@ class TestChildDisabilityAllowanceWhenNotDisabled(Reasoner):
         "child": {
             "isDependent": True,
             # "hasSeriousDisability": True,
-            # "requiresConstantCare": True,
+            # "requiresConstantCareAndAttention": True,
             # "hasMedicalCertification": True
         }
     }
