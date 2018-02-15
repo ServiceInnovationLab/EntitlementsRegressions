@@ -6,7 +6,8 @@ Benefit: Community Services Card (eligibility):
         and applicant.isNZResident
         and applicant.normallyLivesInNZ
         and threshold.isCommunityServicesCard
-            then benefit.isCommunityServicesCard is PERMITTED
+        and applicant.holdsCommunityServicesCard
+    then benefit.isCommunityServicesCard is PERMITTED
 """
 
 
@@ -18,7 +19,8 @@ class TestCommunityServicesCard(Reasoner):
             "Age": 17,
             "isNZResident": True,
             "normallyLivesInNZ": True,
-            "hasSeriousDisability": True
+            "hasSeriousDisability": True,
+            "holdsCommunityServicesCard": True
         },
         "threshold": {
             "isCommunityServicesCard": True

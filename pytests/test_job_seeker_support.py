@@ -2,14 +2,14 @@ from . import Reasoner
 
 """
 Benefit: JobSeeker Support (eligibility):
-If applicant.employmentStatus ≠ "full-time"
-    and 18 ≤ applicant.Age
-    and applicant.isNZResident
-    and applicant.hasLivedInNZfor2Years
-    and applicant.normallyLivesInNZ
-    and income.ofApplicantAndSpouse < 570
-    and recipient.prepareForEmployment
-        then benefit.isJobSeekerSupport is PERMITTED
+    If applicant.employmentStatus ≠ "full-time"
+        and 18 ≤ applicant.Age
+        and applicant.isNZResident
+        and applicant.hasLivedInNZfor2Years
+        and applicant.normallyLivesInNZ
+        and recipient.prepareForEmployment
+        and threshold.income.JobSeekerSupport
+    then benefit.isJobSeekerSupport is PERMITTED
 """
 
 
@@ -29,6 +29,11 @@ class TestJobSeekerSupport(Reasoner):
         },
         "recipient": {
             "prepareForEmployment": True
+        },
+        "threshold": {
+            "income": {
+                "JobSeekerSupport": True
+            }
         }
     }
 
