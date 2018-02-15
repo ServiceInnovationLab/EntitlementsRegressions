@@ -11,7 +11,8 @@ Benefit: Young Parent Payment (eligibility):
         and not benefit.isOrphansBenefit
         and not benefit.isUnsupportedChildsBenefit
         and 1 ≤ applicant.numberOfChildren
-            then benefit.isYoungParentPayment is PERMITTED
+        and threshold.income.YoungParentPayment
+    then benefit.isYoungParentPayment is PERMITTED
 """
 
 
@@ -32,6 +33,11 @@ class TestYoungParentPayment(Reasoner):
         "benefit": {
             "isOrphansBenefit": False,
             "isUnsupportedChildsBenefit": False
+        },
+        "threshold": {
+            "income": {
+                "YoungParentPayment": True
+            }
         }
     }
 
