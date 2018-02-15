@@ -19,7 +19,7 @@ class TestOrphansBenefitForbiddenByDefault(OrphansTests):
         and not applicant.isParent
         and applicant.isNZResident
         and applicant.normallyLivesInNZ
-    then benefit.isOrphansBenefit is PERMITTED
+            then benefit.isOrphansBenefit is PERMITTED
     """
 
     body = {
@@ -43,10 +43,10 @@ class TestOrphansBenefitForGrandparent(OrphansTests):
     """
     Benefit: Part 1C Orphans' Benefit (eligibility in legislation):
     If child.isDependent and parents.areDeceasedMissingOrIncapable
-    and applicant.isPrincipalCarerForOneYearFromApplicationDate
-    and 18 ≤ applicant.Age and not applicant.isParent
-    and applicant.isNZResident and applicant.normallyLivesInNZ
-    then benefit.isOrphansBenefit is PERMITTED
+        and applicant.isPrincipalCarerForOneYearFromApplicationDate
+        and 18 ≤ applicant.Age and not applicant.isParent
+        and applicant.isNZResident and applicant.normallyLivesInNZ
+            then benefit.isOrphansBenefit is PERMITTED
     """
     body = {
         "applicant": {
