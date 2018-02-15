@@ -1,18 +1,14 @@
 from . import Reasoner
 
 """
-
-
 Benefit: Part 1D Child with Serious Disability (eligible):
 
-If child.isDependent
-    and child.hasSeriousDisability
-    and child.requiresConstantCare
+If child.isDependent and child.hasSeriousDisability
+    and child.requiresConstantCareAndAttention
     and child.hasMedicalCertification
     and applicant.isPrincipalCarer
     and applicant.isNZResident
-then benefit.ChildDisabilityAllowance is PERMITTED
-
+        then benefit.ChildDisabilityAllowance is PERMITTED
 """
 
 
@@ -27,7 +23,7 @@ class TestChildDisabilityAllowance(Reasoner):
         "child": {
             "isDependent": True,
             "hasSeriousDisability": True,
-            "requiresConstantCare": True,
+            "requiresConstantCareAndAttention": True,
             "hasMedicalCertification": True
         }
     }
@@ -46,10 +42,7 @@ class TestChildDisabilityAllowanceWhenNotDisabled(Reasoner):
             "isNZResident": True
         },
         "child": {
-            "isDependent": True,
-            # "hasSeriousDisability": True,
-            # "requiresConstantCare": True,
-            # "hasMedicalCertification": True
+            "isDependent": True
         }
     }
 
