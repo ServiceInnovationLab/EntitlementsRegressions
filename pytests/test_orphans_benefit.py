@@ -1,14 +1,6 @@
-"""
-Benefit: Part 1C Orphans' Benefit (eligibility in legislation):
-If child.isDependent
-    and parents.areDeceasedMissingOrIncapableThroughDisability
-    and applicant.isPrincipalCarerForOneYearFromApplicationDate
-    and 18 ≤ applicant.Age
-    and not applicant.isParent
-    and applicant.isNZResident
-    and applicant.normallyLivesInNZ
-then benefit.isOrphansBenefit is PERMITTED
-"""
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from . import Reasoner
 
 
@@ -17,6 +9,18 @@ class OrphansTests(Reasoner):
 
 
 class TestOrphansBenefitForbiddenByDefault(OrphansTests):
+
+    """
+    Benefit: Part 1C Orphans' Benefit (eligibility in legislation):
+    If child.isDependent
+        and parents.areDeceasedMissingOrIncapableThroughDisability
+        and applicant.isPrincipalCarerForOneYearFromApplicationDate
+        and 18 ≤ applicant.Age
+        and not applicant.isParent
+        and applicant.isNZResident
+        and applicant.normallyLivesInNZ
+    then benefit.isOrphansBenefit is PERMITTED
+    """
 
     body = {
         "applicant": {
@@ -36,6 +40,14 @@ class TestOrphansBenefitForbiddenByDefault(OrphansTests):
 
 class TestOrphansBenefitForGrandparent(OrphansTests):
 
+    """
+    Benefit: Part 1C Orphans' Benefit (eligibility in legislation):
+    If child.isDependent and parents.areDeceasedMissingOrIncapable
+    and applicant.isPrincipalCarerForOneYearFromApplicationDate
+    and 18 ≤ applicant.Age and not applicant.isParent
+    and applicant.isNZResident and applicant.normallyLivesInNZ
+    then benefit.isOrphansBenefit is PERMITTED
+    """
     body = {
         "applicant": {
             "isPrincipalCarerForOneYearFromApplicationDate": True,
@@ -44,8 +56,12 @@ class TestOrphansBenefitForGrandparent(OrphansTests):
             "isNZResident": True,
             "normallyLivesInNZ": True
         },
-        "child": {"isDependent": True},
-        "parents": {"areDeceasedMissingOrIncapableThroughDisability": True},
+        "child": {
+            "isDependent": True
+        },
+        "parents": {
+            "areDeceasedMissingOrIncapable": True
+        }
     }
 
     def test_reasoning(self):
@@ -63,8 +79,12 @@ class TestOrphansBenefitForCarer(OrphansTests):
             "isNZResident": True,
             "normallyLivesInNZ": True
         },
-        "child": {"isDependent": True},
-        "parents": {"areDeceasedMissingOrIncapableThroughDisability": True},
+        "child": {
+            "isDependent": True
+        },
+        "parents": {
+            "areDeceasedMissingOrIncapable": True
+        }
     }
 
     def test_reasoning(self):
@@ -82,8 +102,12 @@ class TestOrphansBenefitForChildForbidden(OrphansTests):
             "isNZResident": True,
             "normallyLivesInNZ": True
         },
-        "child": {"isDependent": True},
-        "parents": {"areDeceasedMissingOrIncapableThroughDisability": True},
+        "child": {
+            "isDependent": True
+        },
+        "parents": {
+            "areDeceasedMissingOrIncapable": True
+        }
     }
 
     def test_reasoning(self):
