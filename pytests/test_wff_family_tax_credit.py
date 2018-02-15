@@ -48,27 +48,6 @@ class TestWFFTaxCredit(TestWFFTaxCreditKey):
         self.assertTrue(self.is_conclusive)
 
 
-class TestWFFTaxCreditKey(Reasoner):
-
-    key = 'isWorkingForFamiliesFamilyTaxCredit'
-
-
-class TestWFFTaxCreditDefault(TestWFFTaxCreditKey):
-
-    """
-    Benefit: Working for Families - Family Tax Credit (default state):
-    Default benefit.isWorkingForFamiliesFamilyTaxCredit is FORBIDDEN
-    Overriden by: Benefit: Working for Families
-     - Family Tax Credit (eligibility)
-    """
-
-    body = {}
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_forbidden)
-        self.assertTrue(self.is_conclusive)
-
-
 class TestWFFTaxCredit(TestWFFTaxCreditKey):
 
     """
