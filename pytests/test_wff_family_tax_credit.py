@@ -15,7 +15,6 @@ class TestWFFTaxCreditDefault(TestWFFTaxCreditKey):
      - Family Tax Credit (eligibility)
     """
 
-
     body = {}
 
     def test_reasoning(self):
