@@ -58,5 +58,10 @@ class Reasoner(unittest.TestCase):
             base_url=BASE_URL)
         headers = {'Content-Type': 'application/json',
                    'Authorization': 'Bearer {token}'.format(token=TOKEN)}
-        self.response = requests.post(
-            url, headers=headers, data=json.dumps(self.body)).json()
+        response = requests.post(
+            url, headers=headers, data=json.dumps(self.body))
+        try:
+            self.response = response.json()
+        except:
+            print(response.text)
+            raise
