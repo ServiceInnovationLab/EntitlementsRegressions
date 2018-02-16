@@ -10,8 +10,7 @@ class TestAccomodationSupplement(Reasoner):
             "normallyLivesInNZ": True,
             "isNZResident": True,
             "hasAccommodationCosts": True,
-            "hasSocialHousing": False,
-            "receivesAccommodationSupport": False
+            "hasSocialHousing": False
         },
         "threshold": {
             "income": {
