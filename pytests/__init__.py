@@ -29,9 +29,19 @@ class Reasoner(unittest.TestCase):
                 return rule
 
     @property
+    def conclusive_only_once(self):
+        conclusive_count = 0
+        for rule in self.subject:
+            if rule.get('reasoningResult') == 'CONCLUSIVE':
+                conclusive_count += 1
+
+        return conclusive_count == 1
+
+    @property
     def is_conclusive(self):
         """Look for at least one conclusive reasoning result"""
-        return (self.findConclusiveReasoningResult() is not None)
+        return (self.conclusive_only_once and
+                (self.findConclusiveReasoningResult() is not None))
 
     @property
     def is_permitted(self):
