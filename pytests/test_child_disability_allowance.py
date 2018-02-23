@@ -3,7 +3,8 @@ from . import Reasoner
 """
 Benefit: Part 1D Child with Serious Disability (eligible):
 
-If child.isDependent and child.hasSeriousDisability
+If child.isDependent
+    and child.hasSeriousDisability
     and child.requiresConstantCareAndAttention
     and child.hasMedicalCertification
     and applicant.isPrincipalCarer
