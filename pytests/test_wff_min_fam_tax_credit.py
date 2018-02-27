@@ -24,73 +24,94 @@ class TestWFF_MinimumFamilyTaxCreditDefault(TestKey):
     body = {}
 
     def test_reasoning(self):
-
-        self.assertTrue(self.is_permitted)
-
-
-"""
-Update from Raap
-"""
-
-
-class TestWFFMinimumFamilyTCSingle(TestKey):
-
-    body = {
-        "income": {
-            "ofApplicant": 2000
-        },
-        "applicant": {
-            "worksWeeklyHours": 20,
-            "relationshipStatus": "single",
-            "isSelfEmployed": False
-        },
-        "benefit": {
-            "isStudentAllowance": False
-        }
-    }
-
-    def test_reasoning(self):
-
-        self.assertTrue(self.is_permitted)
-
-
-class TestWFFMinimumFamilyTCCouple(TestKey):
-
-    body = {
-        "income": {
-            "ofApplicantandSpouse": 2000
-        },
-        "applicant": {
-            "worksWeeklyHours": 32,
-            "relationshipStatus": "",
-            "isSelfEmployed": False
-        },
-        "benefit": {
-            "isStudentAllowance": False
-        }
-    }
-
-    def test_reasoning(self):
-
-        self.assertTrue(self.is_permitted)
-
-
-class TestWFFMinimumFamilyTCSelfEmployed(TestKey):
-
-    body = {
-        "income": {
-            "ofApplicant": 2000
-        },
-        "applicant": {
-            "worksWeeklyHours": 20,
-            "relationshipStatus": "single",
-            "isSelfEmployed": True
-        },
-        "benefit": {
-            "isStudentAllowance": False
-        }
-    }
-
-    def test_reasoning(self):
-
         self.assertTrue(self.is_forbidden)
+
+
+class TestWFFMinimumFamilyTaxCredit(TestKey):
+
+    body = {
+        "applicant": {
+            "worksWeeklyHours": 20,
+            "relationshipStatus": "single",
+            "isSelfEmployed": False
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+
+class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
+    """
+    Applicant is eligible for Orphans benefit
+    so conclude that instead of WFF FTC
+    """
+    body = {
+        "applicant": {
+            "Age": 21,
+            "isNZResident": True,
+            "isParent": False,
+            "isPrincipalCarerForOneYearFromApplicationDate": True,
+            "isSelfEmployed": False,
+            "normallyLivesInNZ": True,
+            "relationshipStatus": "single",
+            "worksWeeklyHours": 20,
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        },
+        "child": {
+            "isDependent": True
+        },
+        "parents": {
+            "areDeceasedMissingOrIncapable": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+    def test_forbidden_orphans(self):
+        self.assertTrue(self.isPermitted('isOrphansBenefit'))
+
+
+class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
+    """
+    Applicant is eligible for Unsupported Child's benefit
+    so conclude that instead of WFF FTC
+    """
+    body = {
+        "applicant": {
+            "Age": 19,
+            "isNZResident": True,
+            "isParent": False,
+            "isPrincipalCarerForOneYearFromApplicationDate": True,
+            "isSelfEmployed": False,
+            "relationshipStatus": "single",
+            "worksWeeklyHours": 20,
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        },
+        "parents": {
+            "areUnableToProvideSufficientCare": True
+        },
+        "child": {
+            "isDependent": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+    def test_forbidden_unsupported_child(self):
+        self.assertTrue(self.isPermitted('isUnsupportedChildsBenefit'))
