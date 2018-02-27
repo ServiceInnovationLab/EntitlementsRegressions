@@ -19,12 +19,12 @@ class TestKey(Reasoner):
     key = 'isWorkingForFamiliesMinimumFamilyTaxCredit'
 
 
-class TestWFFMinimumFamilyTCDefault(TestKey):
+class TestWFF_MinimumFamilyTaxCreditDefault(TestKey):
 
     body = {}
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
 
 
@@ -50,7 +50,7 @@ class TestWFFMinimumFamilyTCSingle(TestKey):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
 
 
@@ -71,7 +71,7 @@ class TestWFFMinimumFamilyTCCouple(TestKey):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
 
 
@@ -92,5 +92,5 @@ class TestWFFMinimumFamilyTCSelfEmployed(TestKey):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)

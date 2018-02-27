@@ -15,7 +15,6 @@ class TestChildSubsidyDefault(Reasoner):
     body = {}
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
         self.assertTrue(self.is_forbidden)
 
 
@@ -57,7 +56,7 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
 
 
@@ -95,5 +94,5 @@ class ChildCareSubsidyUnder5s(Reasoner):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)

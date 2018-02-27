@@ -43,5 +43,5 @@ class TestSoleParentSupport(Reasoner):
 
     def test_reasoning(self):
         pprint(self.subject)
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)

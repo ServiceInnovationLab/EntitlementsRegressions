@@ -39,8 +39,6 @@ class TestJobSeekerSupport(Reasoner):
     }
 
     def test_reasoning(self):
-        self.print_response()
-        self.assertTrue(self.is_conclusive)
         self.assertTrue(self.is_permitted)
 
 
@@ -52,7 +50,7 @@ class TestEmployed(TestJobSeekerSupport):
         return new_body
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)
 
 
@@ -64,7 +62,7 @@ class TestEmploymentNotStated(TestJobSeekerSupport):
         return new_body
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)
 
 
@@ -76,7 +74,7 @@ class TestOverThreshold(TestJobSeekerSupport):
         return new_body
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)
 
 
@@ -88,7 +86,7 @@ class TestNotPrepareForEmployment(TestJobSeekerSupport):
         return new_body
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)
 
 
@@ -100,5 +98,5 @@ class TestTooYoung(TestJobSeekerSupport):
         return new_body
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)

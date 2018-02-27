@@ -22,7 +22,7 @@ Applicant is NOT eligible if they:
 """
 
 
-class TestWFFParentalTaxCredit(TestKey):
+class TestWFF_ParentalTaxCredit(TestKey):
     body = {
         "applicant": {
             "isPrincipalCarerForProportion": 34,
@@ -40,4 +40,3 @@ class TestWFFParentalTaxCredit(TestKey):
 
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
-        self.assertTrue(self.is_conclusive)

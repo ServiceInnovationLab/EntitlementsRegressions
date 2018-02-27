@@ -11,7 +11,7 @@ class TestKey(Reasoner):
     key = 'isWorkingForFamiliesInWorkTaxCredit'
 
 
-class TestWFFInWorkTaxCreditDefault(TestKey):
+class TestWFF_InWorkTaxCreditDefault(TestKey):
 
     """
     Benefit: Working for Families - In Work Tax Credit (default state):
@@ -24,7 +24,6 @@ class TestWFFInWorkTaxCreditDefault(TestKey):
 
     def test_reasoning(self):
         self.assertTrue(self.is_forbidden)
-        self.assertTrue(self.is_conclusive)
 
 
 class TestWFFInWorkTaxCreditSingle(TestKey):
@@ -73,7 +72,6 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
 
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
-        self.assertTrue(self.is_conclusive)
 
 
 class TestWFFInWorkTaxCreditForCouples(TestKey):
@@ -105,4 +103,3 @@ class TestWFFInWorkTaxCreditForCouples(TestKey):
 
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
-        self.assertTrue(self.is_conclusive)

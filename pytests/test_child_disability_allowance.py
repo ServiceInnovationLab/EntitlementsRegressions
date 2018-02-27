@@ -30,7 +30,7 @@ class TestChildDisabilityAllowance(Reasoner):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
 
 
@@ -48,5 +48,5 @@ class TestChildDisabilityAllowanceWhenNotDisabled(Reasoner):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_forbidden)
