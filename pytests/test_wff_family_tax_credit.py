@@ -1,4 +1,4 @@
-from . import Reasoner, BenefitResult
+from . import Reasoner
 
 
 class TestWFFTaxCreditKey(Reasoner):
