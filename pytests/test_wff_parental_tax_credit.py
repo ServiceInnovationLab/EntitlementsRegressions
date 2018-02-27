@@ -27,15 +27,7 @@ class TestWFF_ParentalTaxCredit(TestKey):
         "applicant": {
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False
-        },
-        "benefit": {
-            "isPaidParentalLeave": False,
-            "isStudentAllowance": False,
-            "isOrphansBenefit": False,
-            "isUnsupportedChildsBenefit": False,
-            "isOnACCCompensation": False
         }
-
     }
 
     def test_reasoning(self):
