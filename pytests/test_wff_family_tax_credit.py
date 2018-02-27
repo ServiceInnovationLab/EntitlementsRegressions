@@ -46,7 +46,7 @@ class TestWFF_FamilyTaxCredit(TestWFFTaxCreditKey):
         self.assertTrue(self.isPermitted(self.key))
 
 
-class TestWFF_FamilyTaxCredit(TestWFFTaxCreditKey):
+class TestWFF_FamilyTaxCreditOtherBenefits(TestWFFTaxCreditKey):
     """
     Overridden to forbidden if eligible for:
         benefit.isOrphansBenefit
