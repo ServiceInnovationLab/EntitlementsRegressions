@@ -36,8 +36,6 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
     and income.ofApplicantAndSpouse > 0
     and applicant.relationshipStatus = "single"
     and applicant.worksWeeklyHours > 20
-    and not benefit.isStudentAllowance
-    and not benefit.isChildrensPension
     then benefit.isWorkingForFamiliesInWorkTaxCredit is PERMITTED
 
     You can't get in-work tax credit if you receive:
@@ -60,13 +58,12 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True,
             "relationshipStatus": "single",
-            "weeklyHours": 21
+            "worksWeeklyHours": 21
         },
-        "income": {
-            "ofApplicantAndSpouse": 2
-        },
-        "benefit": {
-            "isStudentAllowance": False
+        "threshold": {
+            "income": {
+                "WorkingForFamiliesInWorkTaxCredit": True
+            }
         }
     }
 
@@ -86,18 +83,18 @@ class TestWFFInWorkTaxCreditForCouples(TestKey):
 
     body = {
         "applicant": {
-            "relationshipStatus": "",
-            "worksWeeklyHours": 30,
+            "relationshipStatus": "complicated",
             "isParent": True,
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True
         },
-        "income": {
-            "ofApplicantAndSpouse": 2
+        "couple": {
+            "worksWeeklyHours": 30,
         },
-        "benefit": {
-            "isStudentAllowance": False,
-            "isChildrensPension": False
+        "threshold": {
+            "income": {
+                "WorkingForFamiliesInWorkTaxCredit": True
+            }
         }
     }
 
