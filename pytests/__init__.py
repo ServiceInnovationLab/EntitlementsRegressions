@@ -11,56 +11,57 @@ TOKEN = os.environ.get('RAAP_TOKEN')
 BASE_URL = 'https://nz.raap.d61.io/api/v0/domain/nz-entitlements-eligibility'
 
 
+class BenefitResult(object):
+    def __init__(self, response, benefit):
+        self.benefit = benefit
+        self.response = response
+
+    def find_conclusive_reasoning_result(self):
+        benefit_result = self.response.get('benefit').get(self.benefit)
+        if benefit_result is not None:
+            for rule in benefit_result:
+                if rule.get('reasoningResult') == 'CONCLUSIVE':
+                    return rule.get('goal')
+
+    def has_goal_response_modality(self, modality):
+        expected = {
+            "modality": modality,
+            "negated": False,
+            "value": True,
+            "id": "benefit.{benefit}".format(benefit=self. benefit),
+            "type": "BOOL"
+        }
+        goal = self.find_conclusive_reasoning_result()
+        return goal == expected
+
+
 class Reasoner(unittest.TestCase):
 
     def setUp(self):
         self.runReason()
 
-    def print_response(self):
-        pprint(self.subject)
-
-    @property
-    def subject(self):
-        return self.response.get('benefit').get(self.key)
-
-    def findConclusiveReasoningResult(self):
-        for rule in self.subject:
-            if rule.get('reasoningResult') == 'CONCLUSIVE':
-                return rule
-
-    @property
-    def conclusive_only_once(self):
-        conclusive_count = 0
-        for rule in self.subject:
-            if rule.get('reasoningResult') == 'CONCLUSIVE':
-                conclusive_count += 1
-
-        return conclusive_count == 1
-
-    @property
-    def is_conclusive(self):
-        """Look for at least one conclusive reasoning result"""
-        return (self.conclusive_only_once and
-                (self.findConclusiveReasoningResult() is not None))
-
     @property
     def is_permitted(self):
-        return self._expect_goal_response(modality='PERMITTED')
+        """Is the main benefit permitted?"""
+        return self.isPermitted(self.key)
 
     @property
     def is_forbidden(self):
-        return self._expect_goal_response(modality='FORBIDDEN')
+        """Is the main benefit forbidden?"""
+        return self.isForbidden(self.key)
 
-    def _expect_goal_response(self, modality):
-        expected = {
-            "modality": modality,
-            "negated": False,
-            "value": True,
-            "id": "benefit.{key}".format(key=self.key),
-            "type": "BOOL"
-        }
-        goal = self.findConclusiveReasoningResult().get('goal')
-        return goal == expected
+    def isForbidden(self, benefit):
+        return self.isResult(benefit=benefit, modality='FORBIDDEN')
+
+    def isPermitted(self, benefit):
+        return self.isResult(benefit=benefit, modality='PERMITTED')
+
+    def isResult(self, benefit, modality):
+        return BenefitResult(
+            response=self.response,
+            benefit=benefit
+        ).has_goal_response_modality(
+            modality=modality)
 
     def runReason(self):
         """Run reasoning on the server"""

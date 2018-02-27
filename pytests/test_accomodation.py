@@ -23,5 +23,5 @@ class TestAccomodationSupplement(Reasoner):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_conclusive)
+
         self.assertTrue(self.is_permitted)
