@@ -1,20 +1,5 @@
 from . import Reasoner
 
-"""
-Benefit: Young Parent Payment (eligibility):
-    If 16 ≤ applicant.Age
-        and applicant.Age ≤ 19
-        and child.isDependent
-        and applicant.isNZResident
-        and applicant.normallyLivesInNZ
-        and applicant.isParent
-        and not benefit.isOrphansBenefit
-        and not benefit.isUnsupportedChildsBenefit
-        and 1 ≤ applicant.numberOfChildren
-        and threshold.income.PaidParentalLeave
-    then benefit.isPaidParentalLeave is PERMITTED
-"""
-
 
 class TestPaidParentalLeave(Reasoner):
     key = 'isPaidParentalLeave'
@@ -103,7 +88,7 @@ class TestPaidParentalTransferredToSpouseNotEligible(TestPaidParentalLeave):
 
 
 class TestPaidParentalNotSpouse(TestPaidParentalLeave):
-    """Auntie or grandma, or the father who is not the spouse"""
+    """Auntie or Koro, or the father who is not the spouse"""
     body = {
         "applicant": {
             "isStoppingWorkToCareForChild": True,
