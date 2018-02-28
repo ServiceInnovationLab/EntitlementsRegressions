@@ -73,8 +73,6 @@ class TestPaidParentalLeaveAdoptedNotWorkingTenHours(TestPaidParentalLeave):
     }
 
     def test_reasoning(self):
-        import pprint
-        pprint.pprint(self.response.get('benefit').get(self.key))
         self.assertTrue(self.is_forbidden)
 
 
