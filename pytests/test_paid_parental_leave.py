@@ -18,11 +18,64 @@ class TestPaidParentalLeaveEligible(TestPaidParentalLeave):
             "isStoppingWorkToCareForChild": True,
             "gaveBirthToThisChild": True,
             "meetsPaidParentalLeaveEmployedRequirements": True
+        },
+        "child": {
+            "Age": 0
         }
     }
 
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
+
+
+class TestPaidParentalLeaveAdoptedEligible(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": True,
+            "meetsPaidParentalLeaveEmployedRequirements": True
+        },
+        "child": {
+            "Age": 1,
+            "AdoptedByApplicant": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+
+class TestPaidParentalLeaveAdoptedNotStoppingWork(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": False,
+            # "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "child": {
+            "Age": 1,
+            "AdoptedByApplicant": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestPaidParentalLeaveAdoptedNotWorkingTenHours(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": True,
+            "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "child": {
+            "Age": 1,
+            "AdoptedByApplicant": True
+        }
+    }
+
+    def test_reasoning(self):
+        import pprint
+        pprint.pprint(self.response.get('benefit').get(self.key))
+        self.assertTrue(self.is_forbidden)
 
 
 class TestPaidParentalNotEmployed(TestPaidParentalLeave):
@@ -31,24 +84,14 @@ class TestPaidParentalNotEmployed(TestPaidParentalLeave):
             "isStoppingWorkToCareForChild": True,
             "gaveBirthToThisChild": True,
             "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "child": {
+            "Age": 0
         }
     }
 
     def test_reasoning(self):
         self.assertTrue(self.is_forbidden)
-
-
-class TestPaidParentalSelfEmployed(TestPaidParentalLeave):
-    body = {
-        "applicant": {
-            "isStoppingWorkToCareForChild": True,
-            "gaveBirthToThisChild": True,
-            "meetsPaidParentalLeaveSelfEmploymentRequirements": True
-        }
-    }
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_permitted)
 
 
 class TestPaidParentalTransferredToSpouse(TestPaidParentalLeave):
@@ -56,35 +99,41 @@ class TestPaidParentalTransferredToSpouse(TestPaidParentalLeave):
         "applicant": {
             "isStoppingWorkToCareForChild": True,
             "gaveBirthToThisChild": False,
-            "meetsPaidParentalLeaveSelfEmploymentRequirements": True
+            "meetsPaidParentalLeaveEmployedRequirements": True
         },
         "spouse": {
             "transferringEntitlementToApplicant": True,
             "gaveBirthToThisChild": True,
             "meetsPaidParentalLeaveRequirements": True
+        },
+        "child": {
+            "Age": 0
         }
     }
 
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
 
+# TODO needs clarification
+# class TestPaidParentalTransferredToSpouseNotEligible(TestPaidParentalLeave):
+#     body = {
+#         "applicant": {
+#             "isStoppingWorkToCareForChild": True,
+#             "gaveBirthToThisChild": False,
+#             "meetsPaidParentalLeaveEmployedRequirements": True
+#         },
+#         "spouse": {
+#             "transferringEntitlementToApplicant": True,
+#             "gaveBirthToThisChild": True,
+#             "meetsPaidParentalLeaveRequirements": False
+#         },
+#         "child": {
+#             "Age": 0
+#         }
+#     }
 
-class TestPaidParentalTransferredToSpouseNotEligible(TestPaidParentalLeave):
-    body = {
-        "applicant": {
-            "isStoppingWorkToCareForChild": True,
-            "gaveBirthToThisChild": False,
-            "meetsPaidParentalLeaveSelfEmploymentRequirements": True
-        },
-        "spouse": {
-            "transferringEntitlementToApplicant": True,
-            "gaveBirthToThisChild": True,
-            "meetsPaidParentalLeaveRequirements": False
-        }
-    }
-
-    def test_reasoning(self):
-        self.assertTrue(self.is_forbidden)
+#     def test_reasoning(self):
+#         self.assertTrue(self.is_forbidden)
 
 
 class TestPaidParentalNotSpouse(TestPaidParentalLeave):
@@ -93,7 +142,84 @@ class TestPaidParentalNotSpouse(TestPaidParentalLeave):
         "applicant": {
             "isStoppingWorkToCareForChild": True,
             "gaveBirthToThisChild": False,
-            "meetsPaidParentalLeaveSelfEmploymentRequirements": True
+            "meetsPaidParentalLeaveEmployedRequirements": True
+        },
+        "spouse": {
+            "gaveBirthToThisChild": False,
+        },
+        "child": {
+            "Age": 0
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+
+class TestPaidParentalNotSpouseNotMeetingWorkREq(TestPaidParentalLeave):
+    """Auntie or Koro, or the father who is not the spouse"""
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": True,
+            "gaveBirthToThisChild": False,
+            "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "spouse": {
+            "gaveBirthToThisChild": False,
+        },
+        "child": {
+            "Age": 0
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestPaidParentalNullWorkReq(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": True,
+            "gaveBirthToThisChild": True,
+            # "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "spouse": {
+            "gaveBirthToThisChild": False,
+        },
+        "child": {
+            "Age": 0
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestPaidParentalNullStoppingWork(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            # "isStoppingWorkToCareForChild": True,
+            "gaveBirthToThisChild": True,
+            "meetsPaidParentalLeaveEmployedRequirements": True
+        },
+        "spouse": {
+            "gaveBirthToThisChild": False,
+        },
+        "child": {
+            "Age": 0
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestPaidParentalNullChildAge(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            # "isStoppingWorkToCareForChild": True,
+            "gaveBirthToThisChild": True,
+            "meetsPaidParentalLeaveEmployedRequirements": True
         },
         "spouse": {
             "gaveBirthToThisChild": False,
@@ -101,4 +227,4 @@ class TestPaidParentalNotSpouse(TestPaidParentalLeave):
     }
 
     def test_reasoning(self):
-        self.assertTrue(self.is_permitted)
+        self.assertTrue(self.is_forbidden)
