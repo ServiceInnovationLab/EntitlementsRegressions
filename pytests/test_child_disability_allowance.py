@@ -19,7 +19,8 @@ class TestChildDisabilityAllowance(Reasoner):
     body = {
         "applicant": {
             "isPrincipalCarer": True,
-            "isNZResident": True
+            "isNZResident": True,
+            "normallyLivesInNZ": True
         },
         "child": {
             "isDependent": True,
@@ -40,7 +41,8 @@ class TestChildDisabilityAllowanceWhenNotDisabled(Reasoner):
     body = {
         "applicant": {
             "isPrincipalCarer": True,
-            "isNZResident": True
+            "isNZResident": True,
+            "normallyLivesInNZ": True
         },
         "child": {
             "isDependent": True
@@ -48,5 +50,4 @@ class TestChildDisabilityAllowanceWhenNotDisabled(Reasoner):
     }
 
     def test_reasoning(self):
-
         self.assertTrue(self.is_forbidden)
