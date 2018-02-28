@@ -34,6 +34,11 @@ class TestWFF_ParentalTaxCredit(TestKey):
         "applicant": {
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
@@ -41,11 +46,45 @@ class TestWFF_ParentalTaxCredit(TestKey):
         self.assertTrue(self.is_permitted)
 
 
+class TestWFF_ParentalTaxCreditNullThreshold(TestKey):
+    body = {
+        "applicant": {
+            "isPrincipalCarerForProportion": 34,
+            "receivesIncomeTestedBenefit": False
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestWFF_ParentalTaxCreditNotThreshold(TestKey):
+    body = {
+        "applicant": {
+            "isPrincipalCarerForProportion": 34,
+            "receivesIncomeTestedBenefit": False
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": False
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
 class TestWFF_ParentalLessChildcare(TestKey):
     body = {
         "applicant": {
             "isPrincipalCarerForProportion": 4,
             "receivesIncomeTestedBenefit": False
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
@@ -58,6 +97,11 @@ class TestWFF_ParentalTaxCreditOnMTBenefit(TestKey):
         "applicant": {
             "isPrincipalCarerForProportion": 100,
             "receivesIncomeTestedBenefit": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
@@ -71,6 +115,11 @@ class TestWFF_ParentalTaxCreditForbiddenOnAcc(TestKey):
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False,
             "isOnACCCompensation": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
@@ -95,6 +144,11 @@ class TestWFF_ParentalTaxCreditForbiddenOrphans(TestKey):
         },
         "parents": {
             "areDeceasedMissingOrIncapable": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
@@ -114,6 +168,11 @@ class TestWFF_ParentalTaxCreditForbiddenStudents(TestKey):
             "normallyLivesInNZ": True,
             "Age": 25,
             "isStudyingFullTime": True,
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesParentalTaxCredit": True
+            }
         }
     }
 
