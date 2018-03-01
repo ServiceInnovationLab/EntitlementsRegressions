@@ -177,6 +177,6 @@ class TestWFF_ParentalTaxCreditForbiddenStudents(TestKey):
     }
 
     def test_reasoning(self):
-        # Orphans benefit is permitted, so WFF PTC is not
+        # Student allowance is permitted, so WFF PTC is not
         self.assertTrue(self.isPermitted('isStudentAllowance'))
         self.assertTrue(self.is_forbidden)
