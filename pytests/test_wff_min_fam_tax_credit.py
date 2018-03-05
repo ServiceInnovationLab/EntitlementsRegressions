@@ -91,6 +91,7 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
         "applicant": {
             "Age": 19,
             "isNZResident": True,
+            "normallyLivesInNZ": True,
             "isParent": False,
             "isPrincipalCarerForOneYearFromApplicationDate": True,
             "isSelfEmployed": False,
