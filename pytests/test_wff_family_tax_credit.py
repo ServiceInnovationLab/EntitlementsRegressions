@@ -32,8 +32,12 @@ class TestWFF_FamilyTaxCredit(TestWFFTaxCreditKey):
     """
     body = {
         "applicant": {
+            "isNZResident": True,
             "isParent": True,
             "isPrincipalCarer": True,
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -56,11 +60,15 @@ class TestWFF_FamilyTaxCreditOtherBenefits(TestWFFTaxCreditKey):
 
     body = {
         "applicant": {
+            "isNZResident": True,
             "isParent": True,
             "isPrincipalCarer": True,
             # Applicants who are studying should be
             # on student allowance instead
             "isStudyingFullTime": False
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {

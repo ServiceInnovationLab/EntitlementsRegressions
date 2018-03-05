@@ -54,11 +54,15 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
 
     body = {
         "applicant": {
+            "isNZResident": True,
             "isParent": True,
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True,
             "relationshipStatus": "single",
             "worksWeeklyHours": 21
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -83,10 +87,15 @@ class TestWFFInWorkTaxCreditForCouples(TestKey):
 
     body = {
         "applicant": {
+            "isNZResident": True,
             "relationshipStatus": "complicated",
             "isParent": True,
+            "isPrincipalCarer": True,
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True
+        },
+        "child": {
+            "isDependent": True
         },
         "couple": {
             "worksWeeklyHours": 30,
