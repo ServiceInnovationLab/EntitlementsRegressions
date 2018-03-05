@@ -31,9 +31,14 @@ class TestWFFMinimumFamilyTaxCredit(TestKey):
 
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "worksWeeklyHours": 20,
             "relationshipStatus": "single",
             "isSelfEmployed": False
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -53,6 +58,8 @@ class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
     """
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "Age": 21,
             "isNZResident": True,
             "isParent": False,
@@ -93,6 +100,7 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
             "isNZResident": True,
             "normallyLivesInNZ": True,
             "isParent": False,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForOneYearFromApplicationDate": True,
             "isSelfEmployed": False,
             "relationshipStatus": "single",

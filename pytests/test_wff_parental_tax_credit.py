@@ -32,8 +32,13 @@ class TestWFF_ParentalTaxCreditDefault(TestKey):
 class TestWFF_ParentalTaxCredit(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -49,8 +54,13 @@ class TestWFF_ParentalTaxCredit(TestKey):
 class TestWFF_ParentalTaxCreditNullThreshold(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False
+        },
+        "child": {
+            "isDependent": True
         }
     }
 
@@ -61,8 +71,13 @@ class TestWFF_ParentalTaxCreditNullThreshold(TestKey):
 class TestWFF_ParentalTaxCreditNotThreshold(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -78,8 +93,13 @@ class TestWFF_ParentalTaxCreditNotThreshold(TestKey):
 class TestWFF_ParentalLessChildcare(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 4,
             "receivesIncomeTestedBenefit": False
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -95,8 +115,13 @@ class TestWFF_ParentalLessChildcare(TestKey):
 class TestWFF_ParentalTaxCreditOnMTBenefit(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 100,
             "receivesIncomeTestedBenefit": True
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -112,9 +137,14 @@ class TestWFF_ParentalTaxCreditOnMTBenefit(TestKey):
 class TestWFF_ParentalTaxCreditForbiddenOnAcc(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False,
             "isOnACCCompensation": True
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {
@@ -130,6 +160,8 @@ class TestWFF_ParentalTaxCreditForbiddenOnAcc(TestKey):
 class TestWFF_ParentalTaxCreditForbiddenOrphans(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False,
             # add the orphans bene requirements
@@ -161,6 +193,8 @@ class TestWFF_ParentalTaxCreditForbiddenOrphans(TestKey):
 class TestWFF_ParentalTaxCreditForbiddenStudents(TestKey):
     body = {
         "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
             "isPrincipalCarerForProportion": 34,
             "receivesIncomeTestedBenefit": False,
             # add the student allowance requirements
@@ -168,6 +202,9 @@ class TestWFF_ParentalTaxCreditForbiddenStudents(TestKey):
             "normallyLivesInNZ": True,
             "Age": 25,
             "isStudyingFullTime": True,
+        },
+        "child": {
+            "isDependent": True
         },
         "threshold": {
             "income": {

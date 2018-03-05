@@ -23,6 +23,7 @@ class TestYoungParentPayment(Reasoner):
         "applicant": {
             "Age": 16,
             "isNZResident": True,
+            "isPrincipalCarer": True,
             "normallyLivesInNZ": True,
             "isParent": True,
             "numberOfChildren": 1
@@ -42,5 +43,4 @@ class TestYoungParentPayment(Reasoner):
     }
 
     def test_reasoning(self):
-
         self.assertTrue(self.is_permitted)
