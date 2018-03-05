@@ -20,7 +20,7 @@ class TestHomeHelp(Reasoner):
             "isNZResident": True,
             "normallyLivesInNZ": True,
             "needsDomesticSupport": True,
-            "hasSeriousDisability": True,
+            "isPrincipalCarer": True,
             "holdsCommunityServicesCard": True
         },
         "threshold": {
@@ -31,5 +31,6 @@ class TestHomeHelp(Reasoner):
     }
 
     def test_reasoning(self):
-
         self.assertTrue(self.is_permitted)
+
+# TODO add more tests

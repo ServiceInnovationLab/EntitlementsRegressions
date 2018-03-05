@@ -20,7 +20,8 @@ class TestUnsupportedChildsBenefit(Reasoner):
             "isPrincipalCarerForOneYearFromApplicationDate": True,
             "Age": 19,
             "isParent": False,
-            "isNZResident": True
+            "isNZResident": True,
+            "normallyLivesInNZ": True
         },
         "parents": {
             "areUnableToProvideSufficientCare": True
