@@ -1,8 +1,8 @@
 from . import Reasoner
+from .test_unsupported_childs_benefit import TestUnsupportedChildsBenefit
 
 
 class TestWFFTaxCreditKey(Reasoner):
-
     key = 'isWorkingForFamiliesFamilyTaxCredit'
 
 
@@ -49,47 +49,6 @@ class TestWFF_FamilyTaxCredit(TestWFFTaxCreditKey):
     def test_permitted_workingforfamiliesfamilytaxcredit(self):
         self.assertTrue(self.isPermitted(self.key))
 
-
-class TestWFF_FamilyTaxCreditOtherBenefits(TestWFFTaxCreditKey):
-    """
-    Overridden to forbidden if eligible for:
-        benefit.isOrphansBenefit
-        benefit.isUnsupportedChildsBenefit
-        benefit.isStudentAllowance
-    """
-
-    body = {
-        "applicant": {
-            "isNZResident": True,
-            "isParent": True,
-            "isPrincipalCarer": True,
-            # Applicants who are studying should be
-            # on student allowance instead
-            "isStudyingFullTime": False
-        },
-        "child": {
-            "isDependent": True
-        },
-        "threshold": {
-            "income": {
-                "WorkingForFamiliesFamilyTaxCredit": True
-            }
-        },
-        # Then we add enough info to convince system
-        # they shouldn't be on other benefits
-        "parents": {
-            # Applicant is not caring for an orphan
-            # (Those should be on Orphans benefit)
-            "areDeceasedMissingOrIncapable": False,
-            # Applicant is not caring "unsupported child"s
-            # (Those should be on unsupported child allowance)
-            "areUnableToProvideSufficientCare": False
-        }
-    }
-
-    def test_permitted_workingforfamiliesfamilytaxcredit(self):
-        self.assertTrue(self.isPermitted(self.key))
-
     def test_forbidden_student_allowance(self):
         self.assertTrue(self.isForbidden('isStudentAllowance'))
 
@@ -98,3 +57,23 @@ class TestWFF_FamilyTaxCreditOtherBenefits(TestWFFTaxCreditKey):
 
     def test_forbidden_unsupported_child(self):
         self.assertTrue(self.isForbidden('isUnsupportedChildsBenefit'))
+
+
+class TestWFF_FamilyTaxCreditUnsupportedChild(TestWFFTaxCreditKey):
+    """
+    Overridden to forbidden if eligible for:
+        benefit.isOrphansBenefit
+        benefit.isUnsupportedChildsBenefit
+        benefit.isStudentAllowance
+    """
+
+    body = {
+        **TestWFF_FamilyTaxCredit.body,
+        **TestUnsupportedChildsBenefit.body
+    }
+
+    def test_forbidden_workingforfamiliesfamilytaxcredit(self):
+        self.assertTrue(self.isForbidden(self.key))
+
+    def test_permitted_unsupported_child(self):
+        self.assertTrue(self.isPermitted('isUnsupportedChildsBenefit'))
