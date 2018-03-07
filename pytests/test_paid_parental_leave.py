@@ -102,7 +102,7 @@ class TestPaidParentalTransferredToSpouse(TestPaidParentalLeave):
         "spouse": {
             "transferringEntitlementToApplicant": True,
             "gaveBirthToThisChild": True,
-            "meetsPaidParentalLeaveRequirements": True
+            "meetsPaidParentalLeaveEmployedRequirements": True
         },
         "child": {
             "Age": 0
@@ -112,26 +112,30 @@ class TestPaidParentalTransferredToSpouse(TestPaidParentalLeave):
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
 
-# TODO needs clarification
-# class TestPaidParentalTransferredToSpouseNotEligible(TestPaidParentalLeave):
-#     body = {
-#         "applicant": {
-#             "isStoppingWorkToCareForChild": True,
-#             "gaveBirthToThisChild": False,
-#             "meetsPaidParentalLeaveEmployedRequirements": True
-#         },
-#         "spouse": {
-#             "transferringEntitlementToApplicant": True,
-#             "gaveBirthToThisChild": True,
-#             "meetsPaidParentalLeaveRequirements": False
-#         },
-#         "child": {
-#             "Age": 0
-#         }
-#     }
+# Spouse of the person who gave birth,
+# but the "mother" isn't eligible to transfer
+# her entitlement
 
-#     def test_reasoning(self):
-#         self.assertTrue(self.is_forbidden)
+
+class TestPaidParentalTransferredToSpouseNotEligible(TestPaidParentalLeave):
+    body = {
+        "applicant": {
+            "isStoppingWorkToCareForChild": True,
+            "gaveBirthToThisChild": False,
+            "meetsPaidParentalLeaveEmployedRequirements": True
+        },
+        "spouse": {
+            "transferringEntitlementToApplicant": True,
+            "gaveBirthToThisChild": True,
+            "meetsPaidParentalLeaveEmployedRequirements": False
+        },
+        "child": {
+            "Age": 0
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
 
 
 class TestPaidParentalNotSpouse(TestPaidParentalLeave):
