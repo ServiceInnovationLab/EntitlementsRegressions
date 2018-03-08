@@ -27,7 +27,7 @@ class TestWFF_MinimumFamilyTaxCreditDefault(TestKey):
         self.assertTrue(self.is_forbidden)
 
 
-class TestWFFMinimumFamilyTaxCredit(TestKey):
+class TestWFFMinimumFamilyTaxCreditSingle(TestKey):
 
     body = {
         "applicant": {
@@ -35,7 +35,6 @@ class TestWFFMinimumFamilyTaxCredit(TestKey):
             "isPrincipalCarer": True,
             "worksWeeklyHours": 20,
             "relationshipStatus": "single",
-            "isSelfEmployed": False
         },
         "child": {
             "isDependent": True
@@ -51,6 +50,79 @@ class TestWFFMinimumFamilyTaxCredit(TestKey):
         self.assertTrue(self.is_permitted)
 
 
+class TestWFFMinimumFamilyTaxCreditSingleNotEnoughHours(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "worksWeeklyHours": 18,
+            "relationshipStatus": "single",
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestWFFMinimumFamilyTaxCreditCouple(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "relationshipStatus": "complicated",
+        },
+        "couple": {
+            "worksWeeklyHours": 31,
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+
+class TestWFFMinimumFamilyTaxCreditCoupleNotEnoughHours(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "relationshipStatus": "complicated",
+        },
+        "couple": {
+            "worksWeeklyHours": 20,
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
 class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
     """
     Applicant is eligible for Orphans benefit
@@ -64,7 +136,6 @@ class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
             "isNZResident": True,
             "isParent": False,
             "isPrincipalCarerForOneYearFromApplicationDate": True,
-            "isSelfEmployed": False,
             "normallyLivesInNZ": True,
             "relationshipStatus": "single",
             "worksWeeklyHours": 20,
@@ -102,7 +173,6 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
             "isParent": False,
             "isPrincipalCarer": True,
             "isPrincipalCarerForOneYearFromApplicationDate": True,
-            "isSelfEmployed": False,
             "relationshipStatus": "single",
             "worksWeeklyHours": 20,
         },
