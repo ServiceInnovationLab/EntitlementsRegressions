@@ -12,8 +12,18 @@ If applicant.isPrincipalCarerForOneYearFromApplicationDate
 """
 
 
-class TestUnsupportedChildsBenefit(Reasoner):
+class TestWFFTaxCreditKey(Reasoner):
     key = 'isUnsupportedChildsBenefit'
+
+
+class TestUnsupportedChildsBenefitDefault(TestWFFTaxCreditKey):
+    body = {}
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestUnsupportedChildsBenefit(TestWFFTaxCreditKey):
 
     body = {
         "applicant": {
@@ -32,5 +42,4 @@ class TestUnsupportedChildsBenefit(Reasoner):
     }
 
     def test_reasoning(self):
-
         self.assertTrue(self.is_permitted)

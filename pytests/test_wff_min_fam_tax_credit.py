@@ -1,5 +1,6 @@
 from . import Reasoner
-
+from .test_unsupported_childs_benefit import TestUnsupportedChildsBenefit
+from .test_orphans_benefit import TestOrphansBenefitForCarer
 """
 Applicant IS eligible if:
 
@@ -33,8 +34,9 @@ class TestWFFMinimumFamilyTaxCreditSingle(TestKey):
         "applicant": {
             "isNZResident": True,
             "isPrincipalCarer": True,
-            "worksWeeklyHours": 20,
+            "isSelfEmployed": False,
             "relationshipStatus": "single",
+            "worksWeeklyHours": 20,
         },
         "child": {
             "isDependent": True
@@ -129,28 +131,8 @@ class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
     so conclude that instead of WFF FTC
     """
     body = {
-        "applicant": {
-            "isNZResident": True,
-            "isPrincipalCarer": True,
-            "Age": 21,
-            "isNZResident": True,
-            "isParent": False,
-            "isPrincipalCarerForOneYearFromApplicationDate": True,
-            "normallyLivesInNZ": True,
-            "relationshipStatus": "single",
-            "worksWeeklyHours": 20,
-        },
-        "threshold": {
-            "income": {
-                "workingForFamiliesMinTaxCredit": True
-            }
-        },
-        "child": {
-            "isDependent": True
-        },
-        "parents": {
-            "areDeceasedMissingOrIncapable": True
-        }
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
+        **TestOrphansBenefitForCarer.body
     }
 
     def test_reasoning(self):
@@ -166,27 +148,8 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
     so conclude that instead of WFF FTC
     """
     body = {
-        "applicant": {
-            "Age": 19,
-            "isNZResident": True,
-            "normallyLivesInNZ": True,
-            "isParent": False,
-            "isPrincipalCarer": True,
-            "isPrincipalCarerForOneYearFromApplicationDate": True,
-            "relationshipStatus": "single",
-            "worksWeeklyHours": 20,
-        },
-        "threshold": {
-            "income": {
-                "workingForFamiliesMinTaxCredit": True
-            }
-        },
-        "parents": {
-            "areUnableToProvideSufficientCare": True
-        },
-        "child": {
-            "isDependent": True
-        }
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
+        **TestUnsupportedChildsBenefit.body
     }
 
     def test_reasoning(self):
