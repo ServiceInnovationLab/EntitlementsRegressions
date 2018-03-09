@@ -28,7 +28,7 @@ class TestWFF_MinimumFamilyTaxCreditDefault(TestKey):
         self.assertTrue(self.is_forbidden)
 
 
-class TestWFFMinimumFamilyTaxCredit(TestKey):
+class TestWFFMinimumFamilyTaxCreditSingle(TestKey):
 
     body = {
         "applicant": {
@@ -52,13 +52,86 @@ class TestWFFMinimumFamilyTaxCredit(TestKey):
         self.assertTrue(self.is_permitted)
 
 
+class TestWFFMinimumFamilyTaxCreditSingleNotEnoughHours(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "worksWeeklyHours": 18,
+            "relationshipStatus": "single",
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
+class TestWFFMinimumFamilyTaxCreditCouple(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "relationshipStatus": "complicated",
+        },
+        "couple": {
+            "worksWeeklyHours": 31,
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+
+class TestWFFMinimumFamilyTaxCreditCoupleNotEnoughHours(TestKey):
+
+    body = {
+        "applicant": {
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "relationshipStatus": "complicated",
+        },
+        "couple": {
+            "worksWeeklyHours": 20,
+        },
+        "child": {
+            "isDependent": True
+        },
+        "threshold": {
+            "income": {
+                "workingForFamiliesMinTaxCredit": True
+            }
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
+
+
 class TestWFFMinimumFamilyTaxCreditOrphans(TestKey):
     """
     Applicant is eligible for Orphans benefit
     so conclude that instead of WFF FTC
     """
     body = {
-        **TestWFFMinimumFamilyTaxCredit.body,
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
         **TestOrphansBenefitForCarer.body
     }
 
@@ -75,7 +148,7 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
     so conclude that instead of WFF FTC
     """
     body = {
-        **TestWFFMinimumFamilyTaxCredit.body,
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
         **TestUnsupportedChildsBenefit.body
     }
 
@@ -84,3 +157,19 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
 
     def test_forbidden_unsupported_child(self):
         self.assertTrue(self.isPermitted('isUnsupportedChildsBenefit'))
+
+
+class TestWFFMinimumFamilyTaxCreditOnBenefit(TestKey):
+    """
+    Applicant is eligible for Unsupported Child's benefit
+    so conclude that instead of WFF FTC
+    """
+    body = {
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
+        "applicant": {
+            "receivesIncomeTestedBenefit": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
