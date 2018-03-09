@@ -157,3 +157,19 @@ class TestWFFMinimumFamilyTaxCreditUnsupportedChild(TestKey):
 
     def test_forbidden_unsupported_child(self):
         self.assertTrue(self.isPermitted('isUnsupportedChildsBenefit'))
+
+
+class TestWFFMinimumFamilyTaxCreditOnBenefit(TestKey):
+    """
+    Applicant is eligible for Unsupported Child's benefit
+    so conclude that instead of WFF FTC
+    """
+    body = {
+        **TestWFFMinimumFamilyTaxCreditSingle.body,
+        "applicant": {
+            "receivesIncomeTestedBenefit": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_forbidden)
