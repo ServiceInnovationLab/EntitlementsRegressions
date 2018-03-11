@@ -38,15 +38,18 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
     body = {
         "child": {
             "Age": 5,
-            "WeeklyECEHours": 4
+            "hasMedicalCertification": True,
+            "hasSeriousDisability": True,
+            "isDependent": True,
+            "requiresConstantCareAndAttention": True,
+            "WeeklyECEHours": 4,
         },
         "applicant": {
             "numberOfChildren": 3,
             "isNZResident": True,
-            "isPrincipalCarer": True
-        },
-        "benefit": {
-            "ChildDisabilityAllowance": True
+            "isPrincipalCarer": True,
+            "isNZResident": True,
+            "normallyLivesInNZ": True
         },
         "threshold": {
             "income": {
@@ -56,7 +59,6 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
     }
 
     def test_reasoning(self):
-
         self.assertTrue(self.is_permitted)
 
 
