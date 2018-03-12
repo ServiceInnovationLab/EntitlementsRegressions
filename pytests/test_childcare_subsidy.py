@@ -61,6 +61,71 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
     def test_reasoning(self):
         self.assertTrue(self.is_permitted)
 
+    def test_disability(self):
+        self.assertTrue(self.isPermitted('ChildDisabilityAllowance'))
+
+
+class ChildCareSubsidyDisabledExampleForJen(Reasoner):
+    key = 'isChildCareSubsidy'
+    body = {
+        "applicant": {
+            "Age": 24,
+            "gaveBirthToThisChild": True,
+            "hasAccommodationCosts": False,
+            "hasSeriousDisability": False,
+            "holdsCommunityServicesCard": False,
+            "isNZResident": True,
+            "isPrincipalCarer": True,
+            "normallyLivesInNZ": True,
+            "numberOfChildren": 1,
+            "receivesIncomeTestedBenefit": False,
+            "relationshipStatus": "single",
+            "hasLivedInNZfor2Years": True,
+            "isMaintainingChild": True,
+            "hasMedicalCertificate": True,
+            "hasReceivedPaidParentalLeavePayment": False,
+            "isParent": True,
+            "isPrincipalCarerForProportion": 100,
+            "isStudyingFullTime": False,
+            "employmentStatus": "notfulltime"
+        },
+        "child": {
+            "hasSeriousDisability": True,
+            "requiresConstantCareAndAttention": True,
+            "WeeklyECEHours": 10, "isDependent": True,
+            "Age": 5, "hasMedicalCertification": True
+        },
+        "children": {
+            "dependentsUnder14": 1
+        },
+        "threshold": {
+            "income": {
+                "ChildCareSubsidy": True,
+                "JobSeekerSupport": True,
+                "SoleParentSupport": True,
+                "AccommodationSupplement": True,
+                "workingForFamiliesMinTaxCredit": True,
+                "WorkingForFamiliesInWorkTaxCredit": True,
+                "WorkingForFamiliesFamilyTaxCredit": True,
+                "workingForFamiliesParentalTaxCredit": True,
+                "SupportedLivingPayment": True, "YoungParentPayment": True
+            },
+            "isCommunityServicesCard": True,
+            "cash": {
+                "AccommodationSupplement": True, "HomeHelp": True
+            }
+        },
+        "recipient": {
+            "prepareForEmployment": True
+        }
+    }
+
+    def test_reasoning(self):
+        self.assertTrue(self.is_permitted)
+
+    def test_disability(self):
+        self.assertTrue(self.isPermitted('ChildDisabilityAllowance'))
+
 
 """
 Benefit: Childcare subsidy (eligibility for under 5s):
