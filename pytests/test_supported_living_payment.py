@@ -36,7 +36,7 @@ class TestSupportedLivingPaymentCarer(Reasoner):
             "hasSeriousDisability": True,
             "hasMedicalCertification": True
         },
-        "threshold" {
+        "threshold": {
             "income": {
                 "SupportedLivingPayment": True
             }
