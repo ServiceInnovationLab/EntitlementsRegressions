@@ -84,6 +84,7 @@ class TestWFFMinimumFamilyTaxCreditCouple(TestKey):
             "isNZResident": True,
             "isPrincipalCarer": True,
             "relationshipStatus": "complicated",
+            "isPrincipalCarerForProportion": 100
         },
         "couple": {
             "worksWeeklyHours": 31,
@@ -109,6 +110,7 @@ class TestWFFMinimumFamilyTaxCreditCoupleNotEnoughHours(TestKey):
             "isNZResident": True,
             "isPrincipalCarer": True,
             "relationshipStatus": "complicated",
+            "isPrincipalCarerForProportion": 100
         },
         "couple": {
             "worksWeeklyHours": 20,
