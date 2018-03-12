@@ -59,7 +59,8 @@ class TestWFFInWorkTaxCreditSingle(TestKey):
             "receivesIncomeTestedBenefit": False,
             "isPrincipalCarer": True,
             "relationshipStatus": "single",
-            "worksWeeklyHours": 21
+            "worksWeeklyHours": 21,
+            "isPrincipalCarerForProportion": 100
         },
         "child": {
             "isDependent": True
@@ -92,7 +93,8 @@ class TestWFFInWorkTaxCreditForCouples(TestKey):
             "isParent": True,
             "isPrincipalCarer": True,
             "receivesIncomeTestedBenefit": False,
-            "isPrincipalCarer": True
+            "isPrincipalCarer": True,
+            "isPrincipalCarerForProportion": 100
         },
         "child": {
             "isDependent": True

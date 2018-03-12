@@ -37,6 +37,7 @@ class TestWFFMinimumFamilyTaxCreditSingle(TestKey):
             "isSelfEmployed": False,
             "relationshipStatus": "single",
             "worksWeeklyHours": 20,
+            "isPrincipalCarerForProportion": 100
         },
         "child": {
             "isDependent": True
@@ -60,6 +61,7 @@ class TestWFFMinimumFamilyTaxCreditSingleNotEnoughHours(TestKey):
             "isPrincipalCarer": True,
             "worksWeeklyHours": 18,
             "relationshipStatus": "single",
+            "isPrincipalCarerForProportion": 100
         },
         "child": {
             "isDependent": True
