@@ -1,3 +1,4 @@
+
 from . import Reasoner
 
 
@@ -10,6 +11,7 @@ Benefit: Childcare subsidy (eligibility for under 5s)
 
 
 class TestChildSubsidyDefault(Reasoner):
+
     key = 'isChildCareSubsidy'
 
     body = {}
@@ -65,7 +67,7 @@ class ChildCareSubsidyDisabledUnder6s(Reasoner):
         self.assertTrue(self.isPermitted('ChildDisabilityAllowance'))
 
 
-class ChildCareSubsidyDisabledExampleForJen(Reasoner):
+class ChildCareSubsidyDisabledComplicated(Reasoner):
     key = 'isChildCareSubsidy'
     body = {
         "applicant": {
