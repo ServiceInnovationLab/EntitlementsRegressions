@@ -35,6 +35,7 @@ class TestWFF_FamilyTaxCredit(TestWFFTaxCreditKey):
             "isNZResident": True,
             "isParent": True,
             "isPrincipalCarer": True,
+            "isPrincipalCarerForProportion": 100
         },
         "child": {
             "isDependent": True

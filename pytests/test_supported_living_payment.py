@@ -15,12 +15,12 @@ class TestSupportedLivingPaymentDefault(Reasoner):
 
 class TestSupportedLivingPaymentCarer(Reasoner):
     """
-    Benefit: Part 1E Supported Living Payment (eligible child carer applicant):
     If applicant.isPrincipalCarer
         and applicant.isNZResident
         and 16 ≤ applicant.Age
         and child.hasSeriousDisability
         and child.hasMedicalCertification
+        and threshold.income.SupportedLivingPayment
     then benefit.isSupportedLivingPayment is PERMITTED
     """
 
@@ -35,7 +35,13 @@ class TestSupportedLivingPaymentCarer(Reasoner):
             "isDependent": True,
             "hasSeriousDisability": True,
             "hasMedicalCertification": True
+        },
+        "threshold": {
+            "income": {
+                "SupportedLivingPayment": True
+            }
         }
+
     }
 
     def test_reasoning(self):
