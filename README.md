@@ -9,12 +9,15 @@ Runs regression tests against Regulation as a Platform - tests a set of persona 
 ## How to configure and run
 (for more clues see .travis.yml)
 
+### Configure 
 1. Obtain an API token for RaaP (nz)
-1. Set as TOKEN in your env
-1. `npm install` to get dependencies
-1. run `./bin/make_postman_env.sh` to create a config file for Postman
-1. node_modules/.bin/newman run tests/*.json -e ./postman_env.json
+1. Set as TOKEN in your env (see `env-sample`) 
+1. Create python virtual env to run in and install dependencies (see more instructions below) 
 
+### run tests
+```
+nosetests 
+```
 
 ## Setting up environment
 
